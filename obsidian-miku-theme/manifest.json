@@ -1,0 +1,8 @@
+{
+  "name": "Miku Theme Hybrid Base",
+  "version": "0.1.0",
+  "minAppVersion": "1.5.0",
+  "author": "Your Name",
+  "authorUrl": "https://github.com/yourname",
+  "theme": "obsidian-miku-theme/theme.css"
+}

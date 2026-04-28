@@ -1,0 +1,17 @@
+@keyframes mikuGlowPulse {
+  0% {
+    box-shadow: 0 0 0.5rem color-mix(in srgb, var(--miku-glow) 35%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 1rem color-mix(in srgb, var(--miku-glow) 60%, transparent);
+  }
+  100% {
+    box-shadow: 0 0 0.5rem color-mix(in srgb, var(--miku-glow) 35%, transparent);
+  }
+}
+
+body.miku-plugin-enabled[data-miku-reduced-motion="true"] * {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+}

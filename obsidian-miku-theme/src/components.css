@@ -1,0 +1,37 @@
+body.miku-plugin-enabled {
+  --background-primary: var(--miku-bg);
+  --background-secondary: var(--miku-secondary-dark);
+  --interactive-accent: var(--miku-accent);
+  --text-normal: var(--miku-text);
+}
+
+body.miku-plugin-enabled .workspace-split.mod-root .workspace-tab-header-container,
+body.miku-plugin-enabled .workspace-sidedock {
+  backdrop-filter: blur(14px);
+  background: color-mix(in srgb, var(--miku-secondary-dark) 74%, transparent);
+}
+
+body.miku-plugin-enabled .workspace-tab-header.is-active,
+body.miku-plugin-enabled .clickable-icon:hover,
+body.miku-plugin-enabled .nav-file-title:hover {
+  animation: mikuGlowPulse 2.6s ease-in-out infinite;
+}
+
+body.miku-plugin-enabled .markdown-preview-view .callout {
+  border-radius: 0.8rem;
+  border-color: color-mix(in srgb, var(--miku-accent) 70%, transparent);
+  background: color-mix(in srgb, var(--miku-secondary-dark) 80%, transparent);
+}
+
+body.miku-plugin-enabled input[type="checkbox"]:checked {
+  background-color: var(--miku-accent);
+  border-color: var(--miku-accent);
+}
+
+body.miku-plugin-enabled .graph-view.color-fill-highlight {
+  color: color-mix(in srgb, var(--miku-glow) calc(var(--miku-glow-intensity, 0.55) * 100%), #7deaf0);
+}
+
+body.miku-plugin-enabled .graph-view.color-line {
+  color: color-mix(in srgb, var(--miku-accent) 66%, #5cdae4);
+}

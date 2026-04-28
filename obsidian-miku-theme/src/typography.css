@@ -1,0 +1,14 @@
+body.miku-plugin-enabled {
+  --font-text-theme: "Inter", "Noto Sans", sans-serif;
+  --font-interface-theme: "Inter", "Noto Sans", sans-serif;
+  --line-height-normal: 1.7;
+}
+
+body.miku-plugin-enabled .markdown-preview-view {
+  color: var(--miku-text);
+  line-height: 1.8;
+}
+
+body.miku-plugin-enabled .cm-content {
+  line-height: 1.7;
+}

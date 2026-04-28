@@ -1,0 +1,31 @@
+:root {
+  --miku-accent: #39c5bb;
+  --miku-deep-teal: #137a7f;
+  --miku-bg: #0f1117;
+  --miku-secondary-dark: #181c25;
+  --miku-glow: #6fffe9;
+  --miku-text: #d7e3ea;
+  --miku-glow-intensity: 0.55;
+}
+
+body[data-miku-theme="MinimalMiku"] {
+  --miku-accent: #39c5bb;
+  --miku-glow: #6fffe9;
+}
+
+body[data-miku-theme="Concert"] {
+  --miku-accent: #34e3cf;
+  --miku-glow: #85fff0;
+}
+
+body[data-miku-theme="NightNeon"] {
+  --miku-accent: #2bc6d8;
+  --miku-bg: #0a0d14;
+  --miku-secondary-dark: #131827;
+}
+
+body[data-miku-theme="SnowMiku"] {
+  --miku-accent: #8defff;
+  --miku-deep-teal: #2f9daa;
+  --miku-bg: #121821;
+}

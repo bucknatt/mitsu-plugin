@@ -1,0 +1,101 @@
+/* Combined theme file for distribution. */
+
+:root {
+  --miku-accent: #39c5bb;
+  --miku-deep-teal: #137a7f;
+  --miku-bg: #0f1117;
+  --miku-secondary-dark: #181c25;
+  --miku-glow: #6fffe9;
+  --miku-text: #d7e3ea;
+  --miku-glow-intensity: 0.55;
+}
+
+body[data-miku-theme="MinimalMiku"] {
+  --miku-accent: #39c5bb;
+  --miku-glow: #6fffe9;
+}
+
+body[data-miku-theme="Concert"] {
+  --miku-accent: #34e3cf;
+  --miku-glow: #85fff0;
+}
+
+body[data-miku-theme="NightNeon"] {
+  --miku-accent: #2bc6d8;
+  --miku-bg: #0a0d14;
+  --miku-secondary-dark: #131827;
+}
+
+body[data-miku-theme="SnowMiku"] {
+  --miku-accent: #8defff;
+  --miku-deep-teal: #2f9daa;
+  --miku-bg: #121821;
+}
+
+body.miku-plugin-enabled {
+  --font-text-theme: "Inter", "Noto Sans", sans-serif;
+  --font-interface-theme: "Inter", "Noto Sans", sans-serif;
+  --line-height-normal: 1.7;
+  --background-primary: var(--miku-bg);
+  --background-secondary: var(--miku-secondary-dark);
+  --interactive-accent: var(--miku-accent);
+  --text-normal: var(--miku-text);
+}
+
+body.miku-plugin-enabled .markdown-preview-view {
+  color: var(--miku-text);
+  line-height: 1.8;
+}
+
+body.miku-plugin-enabled .cm-content {
+  line-height: 1.7;
+}
+
+@keyframes mikuGlowPulse {
+  0% {
+    box-shadow: 0 0 0.5rem color-mix(in srgb, var(--miku-glow) 35%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 1rem color-mix(in srgb, var(--miku-glow) 60%, transparent);
+  }
+  100% {
+    box-shadow: 0 0 0.5rem color-mix(in srgb, var(--miku-glow) 35%, transparent);
+  }
+}
+
+body.miku-plugin-enabled[data-miku-reduced-motion="true"] * {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+}
+
+body.miku-plugin-enabled .workspace-split.mod-root .workspace-tab-header-container,
+body.miku-plugin-enabled .workspace-sidedock {
+  backdrop-filter: blur(14px);
+  background: color-mix(in srgb, var(--miku-secondary-dark) 74%, transparent);
+}
+
+body.miku-plugin-enabled .workspace-tab-header.is-active,
+body.miku-plugin-enabled .clickable-icon:hover,
+body.miku-plugin-enabled .nav-file-title:hover {
+  animation: mikuGlowPulse 2.6s ease-in-out infinite;
+}
+
+body.miku-plugin-enabled .markdown-preview-view .callout {
+  border-radius: 0.8rem;
+  border-color: color-mix(in srgb, var(--miku-accent) 70%, transparent);
+  background: color-mix(in srgb, var(--miku-secondary-dark) 80%, transparent);
+}
+
+body.miku-plugin-enabled input[type="checkbox"]:checked {
+  background-color: var(--miku-accent);
+  border-color: var(--miku-accent);
+}
+
+body.miku-plugin-enabled .graph-view.color-fill-highlight {
+  color: color-mix(in srgb, var(--miku-glow) calc(var(--miku-glow-intensity, 0.55) * 100%), #7deaf0);
+}
+
+body.miku-plugin-enabled .graph-view.color-line {
+  color: color-mix(in srgb, var(--miku-accent) 66%, #5cdae4);
+}
