@@ -26,3 +26,10 @@ or for isolated testing:
 
 - This setup is desktop-focused and matches the release test plan scope.
 - The script does not enable plugins/theme automatically; enable them from Obsidian settings.
+- If `obsidian <vault>` fails with `Cannot find module 'electron'`, launch with:
+
+```bash
+./qa/launch-obsidian.sh /home/cachy/Documents/bfh4
+```
+
+This wrapper unsets `ELECTRON_RUN_AS_NODE` (common in automation shells) and adds `--no-sandbox` automatically when running as root.
