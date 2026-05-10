@@ -15,7 +15,11 @@ export default class MikuPlugin extends Plugin {
     await this.loadPluginSettings();
 
     this.themeManager.apply(this.settings);
-    this.moduleRegistry = new ModuleRegistry(this);
+    this.moduleRegistry = new ModuleRegistry(
+      this,
+      () => this.openDashboardView(),
+      () => this.saveAndRefresh()
+    );
     await this.moduleRegistry.mountAll();
     await this.moduleRegistry.updateAll(this.settings);
 

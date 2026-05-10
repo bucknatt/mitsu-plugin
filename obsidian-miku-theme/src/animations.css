@@ -1,12 +1,14 @@
 @keyframes mikuGlowPulse {
-  0% {
-    box-shadow: 0 0 0.5rem color-mix(in srgb, var(--miku-glow) 35%, transparent);
+  0%,
+  100% {
+    box-shadow: 0 0 0.65rem color-mix(in srgb, var(--miku-glow) 52%, transparent),
+      0 0 1.35rem color-mix(in srgb, var(--miku-pop) 22%, transparent),
+      0 0 2rem color-mix(in srgb, var(--miku-glow) 12%, transparent);
   }
   50% {
-    box-shadow: 0 0 1rem color-mix(in srgb, var(--miku-glow) 60%, transparent);
-  }
-  100% {
-    box-shadow: 0 0 0.5rem color-mix(in srgb, var(--miku-glow) 35%, transparent);
+    box-shadow: 0 0 1.05rem color-mix(in srgb, var(--miku-glow) 68%, transparent),
+      0 0 1.75rem color-mix(in srgb, var(--miku-pop) 38%, transparent),
+      0 0 2.6rem color-mix(in srgb, var(--miku-accent) 18%, transparent);
   }
 }
 

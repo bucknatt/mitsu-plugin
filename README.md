@@ -44,3 +44,4 @@ npm run typecheck --prefix ./obsidian-miku-plugin
 - Use inspired palettes and original assets
 - Do not redistribute official Crypton media without permission
 - Keep bundled artwork/iconography either original or licensed
+- ASCII decorations in the plugin are **repo-original** text motifs, not official character artwork

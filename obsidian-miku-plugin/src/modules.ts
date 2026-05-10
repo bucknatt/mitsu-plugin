@@ -1,6 +1,6 @@
 import { Plugin } from "obsidian";
 import { MIKU_PANEL_VIEW, MikuPanelView } from "./miku-panel";
-import { MikuPluginSettings } from "./settings";
+import { DEFAULT_SETTINGS, MikuPluginSettings } from "./settings";
 import { WidgetManager } from "./widgets";
 
 export interface ManagedModule {
@@ -12,8 +12,12 @@ export interface ManagedModule {
 class WidgetModule implements ManagedModule {
   private readonly widgetManager: WidgetManager;
 
-  constructor(plugin: Plugin) {
-    this.widgetManager = new WidgetManager(plugin);
+  constructor(
+    plugin: Plugin,
+    openDashboard: () => Promise<void>,
+    saveAndRefresh: () => Promise<void>
+  ) {
+    this.widgetManager = new WidgetManager(plugin, openDashboard, saveAndRefresh);
   }
 
   mount(): void {
@@ -36,7 +40,11 @@ class DashboardModule implements ManagedModule {
 
   mount(): void {
     this.plugin.registerView(MIKU_PANEL_VIEW, (leaf) => {
-      this.panelView = new MikuPanelView(leaf, this.getSettings());
+      const host = this.plugin as unknown as {
+        settings: MikuPluginSettings;
+        saveAndRefresh(): Promise<void>;
+      };
+      this.panelView = new MikuPanelView(leaf, host);
       return this.panelView;
     });
   }
@@ -60,26 +68,22 @@ class DashboardModule implements ManagedModule {
 
   private getSettings(): MikuPluginSettings {
     const plugin = this.plugin as unknown as { settings?: MikuPluginSettings };
-    return plugin.settings ?? {
-      themeMode: "MinimalMiku",
-      statusBarEnabled: true,
-      bannerEnabled: false,
-      quoteEnabled: false,
-      quoteIntervalSeconds: 25,
-      profileCardEnabled: false,
-      compactDashboard: false,
-      glowIntensity: 0.55,
-      reducedMotion: false,
-      bannerText: "Miku Mode Active"
-    };
+    return plugin.settings ?? { ...DEFAULT_SETTINGS };
   }
 }
 
 export class ModuleRegistry {
   private readonly modules: ManagedModule[];
 
-  constructor(plugin: Plugin) {
-    this.modules = [new WidgetModule(plugin), new DashboardModule(plugin)];
+  constructor(
+    plugin: Plugin,
+    openDashboard: () => Promise<void>,
+    saveAndRefresh: () => Promise<void>
+  ) {
+    this.modules = [
+      new WidgetModule(plugin, openDashboard, saveAndRefresh),
+      new DashboardModule(plugin)
+    ];
   }
 
   async mountAll(): Promise<void> {

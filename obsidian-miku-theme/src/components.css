@@ -1,14 +1,81 @@
-body.miku-plugin-enabled {
-  --background-primary: var(--miku-bg);
-  --background-secondary: var(--miku-secondary-dark);
-  --interactive-accent: var(--miku-accent);
-  --text-normal: var(--miku-text);
+/* Keep in sync with the bottom half of theme.css (workspace + editor chrome). */
+
+body.miku-plugin-enabled .workspace {
+  background: var(--miku-gradient-surface);
+}
+
+body.miku-plugin-enabled .workspace-split.mod-root .workspace-tab-header-container {
+  border-bottom: 1px solid var(--miku-tab-rail);
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--miku-pop) 14%, transparent),
+    0 8px 24px color-mix(in srgb, var(--palette-pop-violet) 6%, transparent);
+}
+
+body.miku-plugin-enabled .workspace-tab-header.is-active .workspace-tab-header-inner-title {
+  color: var(--miku-file-title);
+  text-shadow:
+    0 0 0.55rem color-mix(in srgb, var(--miku-pop) 48%, transparent),
+    0 0 1rem color-mix(in srgb, var(--miku-glow) 26%, transparent);
+}
+
+body.miku-plugin-enabled .workspace-tab-header .workspace-tab-header-inner-title,
+body.miku-plugin-enabled .nav-file-title-content,
+body.miku-plugin-enabled .view-header-title {
+  color: var(--miku-file-title);
+}
+
+body.miku-plugin-enabled .workspace-tab-header.is-active {
+  box-shadow: 0 -2px 0 0 color-mix(in srgb, var(--miku-accent) 75%, transparent) inset,
+    0 -4px 0 0 color-mix(in srgb, var(--miku-pop) 35%, transparent) inset,
+    0 -7px 0 0 color-mix(in srgb, var(--miku-sun) 28%, transparent) inset;
+}
+
+body.miku-plugin-enabled .nav-folder-title:hover,
+body.miku-plugin-enabled .vertical-tab-nav-item:hover {
+  background-color: color-mix(in srgb, var(--miku-accent) 10%, transparent);
+}
+
+body.miku-plugin-enabled .nav-folder .nav-folder-title-content {
+  font-weight: 600;
+}
+
+body.miku-plugin-enabled .nav-folder:nth-of-type(6n + 1) > .nav-folder-title .nav-folder-title-content {
+  color: color-mix(in srgb, var(--palette-pop-cyan-hot) 74%, var(--miku-text));
+}
+
+body.miku-plugin-enabled .nav-folder:nth-of-type(6n + 2) > .nav-folder-title .nav-folder-title-content {
+  color: color-mix(in srgb, var(--palette-pop-sky) 72%, var(--miku-text));
+}
+
+body.miku-plugin-enabled .nav-folder:nth-of-type(6n + 3) > .nav-folder-title .nav-folder-title-content {
+  color: color-mix(in srgb, var(--palette-pop-violet) 66%, var(--miku-text));
+}
+
+body.miku-plugin-enabled .nav-folder:nth-of-type(6n + 4) > .nav-folder-title .nav-folder-title-content {
+  color: color-mix(in srgb, var(--palette-pop-pink-soft) 64%, var(--miku-text));
+}
+
+body.miku-plugin-enabled .nav-folder:nth-of-type(6n + 5) > .nav-folder-title .nav-folder-title-content {
+  color: color-mix(in srgb, var(--palette-pop-sun) 56%, var(--miku-text));
+}
+
+body.miku-plugin-enabled .nav-folder:nth-of-type(6n + 6) > .nav-folder-title .nav-folder-title-content {
+  color: color-mix(in srgb, var(--palette-pop-teal-deep) 64%, var(--miku-text));
+}
+
+body.miku-plugin-enabled textarea,
+body.miku-plugin-enabled input[type="text"],
+body.miku-plugin-enabled .dropdown {
+  border-color: var(--miku-border-subtle);
 }
 
 body.miku-plugin-enabled .workspace-split.mod-root .workspace-tab-header-container,
 body.miku-plugin-enabled .workspace-sidedock {
   backdrop-filter: blur(14px);
-  background: color-mix(in srgb, var(--miku-secondary-dark) 74%, transparent);
+  background: linear-gradient(
+    178deg,
+    color-mix(in srgb, var(--miku-secondary-dark) 86%, transparent) 0%,
+    color-mix(in srgb, var(--miku-accent) 3%, transparent) 100%
+  );
 }
 
 body.miku-plugin-enabled .workspace-tab-header.is-active,
@@ -19,19 +86,29 @@ body.miku-plugin-enabled .nav-file-title:hover {
 
 body.miku-plugin-enabled .markdown-preview-view .callout {
   border-radius: 0.8rem;
-  border-color: color-mix(in srgb, var(--miku-accent) 70%, transparent);
-  background: color-mix(in srgb, var(--miku-secondary-dark) 80%, transparent);
+  border-style: solid;
+  border-width: 1px;
+  border-color: color-mix(in srgb, var(--miku-accent) 45%, var(--palette-pop-violet));
+  border-left-width: 4px;
+  border-left-color: var(--miku-accent-warm);
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--miku-secondary-dark) 88%, transparent) 0%,
+    color-mix(in srgb, var(--palette-pop-violet) 5%, var(--miku-secondary-dark)) 100%
+  );
+  box-shadow: 2px 0 0 color-mix(in srgb, var(--palette-pop-cyan-hot) 18%, transparent) inset,
+    -1px 0 0 color-mix(in srgb, var(--miku-pop) 12%, transparent) inset;
 }
 
 body.miku-plugin-enabled input[type="checkbox"]:checked {
   background-color: var(--miku-accent);
-  border-color: var(--miku-accent);
+  border-color: color-mix(in srgb, var(--palette-pop-violet) 42%, transparent);
 }
 
 body.miku-plugin-enabled .graph-view.color-fill-highlight {
-  color: color-mix(in srgb, var(--miku-glow) calc(var(--miku-glow-intensity, 0.55) * 100%), #7deaf0);
+  color: color-mix(in srgb, var(--miku-glow) calc(var(--miku-glow-intensity, 0.55) * 100%), var(--miku-pop));
 }
 
 body.miku-plugin-enabled .graph-view.color-line {
-  color: color-mix(in srgb, var(--miku-accent) 66%, #5cdae4);
+  color: color-mix(in srgb, var(--miku-accent) 45%, var(--palette-pop-violet));
 }

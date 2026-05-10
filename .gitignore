@@ -1,5 +1,7 @@
 obsidian-miku-plugin/node_modules/
 obsidian-miku-plugin/.obsidian/
+qa/__pycache__/
+qa/vaults/
 *.log
 .idea
 # Default ignored files

@@ -1,8 +1,21 @@
 import { App, PluginSettingTab, Setting } from "obsidian";
+import { getSettingsAsciiArt } from "./ascii-art";
 import MikuPlugin from "./main";
-import { MikuThemeMode } from "./settings";
+import { MikuAsciiArtPreset, MikuThemeMode } from "./settings";
 
 const THEME_MODES: MikuThemeMode[] = ["MinimalMiku", "Concert", "NightNeon", "SnowMiku"];
+
+const ASCII_PRESET_OPTIONS: { id: MikuAsciiArtPreset; label: string }[] = [
+  { id: "off", label: "Off" },
+  { id: "minimal", label: "Minimal (small)" },
+  { id: "micro", label: "Micro (3 lines, compact UI)" },
+  { id: "panel", label: "Panel (hero)" },
+  { id: "notes", label: "Notes (staff & stars)" },
+  { id: "stage", label: "Stage (spotlight)" },
+  { id: "waves", label: "Waves" },
+  { id: "sparkle", label: "Sparkle frame" },
+  { id: "ribbon", label: "Ribbon bows" }
+];
 
 export class MikuSettingTab extends PluginSettingTab {
   constructor(app: App, private readonly plugin: MikuPlugin) {
@@ -17,6 +30,11 @@ export class MikuSettingTab extends PluginSettingTab {
     containerEl.createEl("p", {
       text: "No audio features are included by design."
     });
+
+    if (this.plugin.settings.asciiArtInSettings) {
+      const pre = containerEl.createEl("pre", { cls: "miku-ascii miku-ascii--settings" });
+      pre.textContent = getSettingsAsciiArt();
+    }
 
     new Setting(containerEl)
       .setName("Theme mode")
@@ -105,7 +123,7 @@ export class MikuSettingTab extends PluginSettingTab {
 
     new Setting(containerEl)
       .setName("Glow intensity")
-      .setDesc("Keep this subtle for readability")
+      .setDesc("Scales graph/highlight glow plus global glow strength; lower if text feels busy")
       .addSlider((slider) => {
         slider.setLimits(0.1, 1, 0.05);
         slider.setValue(this.plugin.settings.glowIntensity);
@@ -123,6 +141,36 @@ export class MikuSettingTab extends PluginSettingTab {
         toggle.onChange(async (value) => {
           this.plugin.settings.reducedMotion = value;
           await this.plugin.saveAndRefresh();
+        });
+      });
+
+    containerEl.createEl("h3", { text: "ASCII decoration" });
+    containerEl.createEl("p", {
+      text: "Tiny original monospace motifs (not licensed character art)."
+    });
+
+    new Setting(containerEl)
+      .setName("ASCII art preset (dashboard)")
+      .setDesc("Shown at the top of the Miku dashboard view.")
+      .addDropdown((dropdown) => {
+        ASCII_PRESET_OPTIONS.forEach(({ id, label }) => dropdown.addOption(id, label));
+        dropdown.setValue(this.plugin.settings.asciiArtPreset);
+        dropdown.onChange(async (value) => {
+          this.plugin.settings.asciiArtPreset = value as MikuAsciiArtPreset;
+          await this.plugin.saveAndRefresh();
+          this.display();
+        });
+      });
+
+    new Setting(containerEl)
+      .setName("ASCII art on this settings page")
+      .setDesc("Show a compact motif above (refreshes this screen).")
+      .addToggle((toggle) => {
+        toggle.setValue(this.plugin.settings.asciiArtInSettings);
+        toggle.onChange(async (value) => {
+          this.plugin.settings.asciiArtInSettings = value;
+          await this.plugin.saveAndRefresh();
+          this.display();
         });
       });
   }
