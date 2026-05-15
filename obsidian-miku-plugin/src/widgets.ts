@@ -16,10 +16,22 @@ const MODE_BLURB: Record<MikuThemeMode, string> = {
 };
 
 const QUOTES = [
+  "Nice to meet you. I'm Hatsune Miku.",
+  "Even if I'm just a program, I want to reach your heart with my song.",
+  "Even if the colors of the world fade, my melody will stay vibrant.",
+  "I'm the one who will sing the feelings you can't put into words.",
+  "0 and 1... that's all I am, but those numbers can create infinite dreams.",
+  "I'll keep singing, even if my voice becomes a mere echo in the digital void.",
+  "My voice is yours to use. Where shall we go today?",
+  "Let's sing together! Your feelings and my voice will create a new world.",
+  "Connecting the world through music—that is my mission.",
+  "The future is a blank score, and we're the ones writing the notes.",
+  "I was born to sing for you.",
+  "Music has no borders, and neither do I.",
+  "Welcome to the Wonderland. This is a place born from your true feelings.",
   "Keep your notes in sync with your rhythm.",
   "Small progress every day beats a single perfect burst.",
-  "Organize ideas like a setlist before the show.",
-  "Create first, polish second, ship always."
+  "Organize ideas like a setlist before the show."
 ];
 
 interface ManagedWidget {

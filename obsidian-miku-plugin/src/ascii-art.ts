@@ -20,7 +20,7 @@ export const ASCII_PRESETS = {
     "    \\~~~~~/    ",
     "  ~/       \\~  ",
     " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
-    "   keep your tempo; ship notes!"
+    "   keep your tempo; let ideas sing!"
   ].join("\n"),
 
   /** Eighth-notes and staff-ish lines */
@@ -28,7 +28,7 @@ export const ASCII_PRESETS = {
     "   |'|   |'|   |'|",
     "   | |___| |___| |",
     "    \\  *   *   * /",
-    "     \\___~___~/   ~setlist~",
+    "     \\___~___~/   ~your melody~",
     "        |   |",
     "        ~~~ ~~~"
   ].join("\n"),
@@ -37,19 +37,19 @@ export const ASCII_PRESETS = {
   stage: [
     "         .---.---.",
     "        /  o     o  \\",
-    "       |      ^      |   your vault",
+    "       |      ^      |   your song",
     "       |____ / \\ ____|",
     "         \\  lights  /",
     "          \\________/",
-    "           ~ encore ~"
+    "           ~ sing on ~"
   ].join("\n"),
 
-  /** Waves + vault label */
+  /** Waves + open sea motif */
   waves: [
     "  ~^~^~^~^~^~^~^~^~^~^~^~",
     " ^  /\\  /\\  /\\  /\\  /\\  ^",
     "^ ~(__)(__)(__)(__)(__)~ ^",
-    " ^    ~  obsidian sea  ~  ^",
+    " ^    ~  endless melody  ~  ^",
     "  ~^~^~^~^~^~^~^~^~^~^~^~"
   ].join("\n"),
 
@@ -60,7 +60,7 @@ export const ASCII_PRESETS = {
     "  *--- ( o_o ) ---*",
     "    /   /|\\   \\",
     "   *   / | \\   *",
-    "      ~spark vault~"
+    "      ~ hearts at glow ~"
   ].join("\n"),
 
   /** Ribbon / bow abstract */
@@ -77,11 +77,23 @@ export const ASCII_PRESETS = {
   micro: [
     " (*^~^*)  ~miku-hybrid~",
     "  /|\\",
-    " encore in .md"
+    " melody in every line"
+  ].join("\n"),
+
+  portrait: [
+    "　　　 　　/＾>》, -―‐‐＜＾}",
+    "　　　 　./:::::::/,≠´:::::;::::::::ヽ.",
+    "　　　　/:::::::〃::::::::::／}::::丿ハ",
+    "　　　 ./:::::::::i{l|:::::／　ﾉ／ }::::::}   .ᐟ.ᐟ",
+    "　　    /:::::::::::瓜イ⸝⸝o　 ´  O, ':::::ﾉ  < woah im getting attention!!111!! )",
+    "　     ./:::::::::::::|ﾉﾍ.{､　 ヮ_.ノﾉイ",
+    "　     |:::::::::::::::| ／,}｀ｽ/￣￣￣￣/",
+    " 　    |::::::::::::::::|(_::::つ/             /　　",
+    "            ￣￣￣￣￣＼/＿＿＿＿/"
   ].join("\n"),
 
   settings: [
-    "  ~~ miku hybrid ~~",
+    "  ~~ miku plugin ~~",
     "   \\^_^/  tweaks",
     "    \\|/",
   ].join("\n")
@@ -108,6 +120,8 @@ export function getDashboardAsciiArt(preset: MikuAsciiArtPreset): string | null 
       return ASCII_PRESETS.ribbon;
     case "micro":
       return ASCII_PRESETS.micro;
+    case "portrait":
+      return ASCII_PRESETS.portrait;
     default:
       return ASCII_PRESETS.panel;
   }

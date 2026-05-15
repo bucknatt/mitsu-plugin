@@ -10,7 +10,7 @@ Runtime plugin for the Hatsune Miku hybrid experience.
 - Optional quote widget with interval control
 - Optional profile card widget
 - Ribbon action + command for quick mode switching
-- Optional **original ASCII decorations** on the dashboard (presets: Minimal, Micro, Panel, Notes, Stage, Waves, Sparkle, Ribbon) and a compact motif on the settings screen
+- Optional **original ASCII decorations** on the dashboard (presets: Minimal, Micro, Panel, Notes, Stage, Waves, Sparkle, Ribbon, Portrait) and a compact motif on the settings screen
 
 Visual palette for the companion **Miku Theme Hybrid Base** theme is driven by [Color-Hex palette 19601](https://www.color-hex.com/color-palette/19601) (`#373b3e`, `#bec8d1`, `#86cecb`, `#137a7f`, `#e12885`) mapped into CSS variables per mode.
 

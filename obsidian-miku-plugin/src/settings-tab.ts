@@ -14,7 +14,8 @@ const ASCII_PRESET_OPTIONS: { id: MikuAsciiArtPreset; label: string }[] = [
   { id: "stage", label: "Stage (spotlight)" },
   { id: "waves", label: "Waves" },
   { id: "sparkle", label: "Sparkle frame" },
-  { id: "ribbon", label: "Ribbon bows" }
+  { id: "ribbon", label: "Ribbon bows" },
+  { id: "portrait", label: "Portrait (Wonderland)" }
 ];
 
 export class MikuSettingTab extends PluginSettingTab {
