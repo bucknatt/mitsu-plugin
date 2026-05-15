@@ -2,14 +2,14 @@
 
 Hatsune Miku–inspired theme modes, optional dashboard widgets, and bundled hybrid styling for [Obsidian](https://obsidian.md/).
 
-## Install (Community plugins)
+## Install
 
 1. Open **Settings → Community plugins**.
 2. Turn off **Restricted mode** (first-time setup).
 3. Select **Browse**, search for **Miku** or **Hybrid**.
 4. Install **Miku Hybrid**, then **Enable**.
 
-No separate Appearance theme is required: release builds bundle palette CSS into the plugin `styles.css`.
+No separate Appearance theme is required: releases bundle palette CSS into the plugin `styles.css`.
 
 ## Features
 
@@ -36,25 +36,10 @@ This plugin includes no audio assets, APIs, or dependencies.
 - Do not redistribute official character media without permission.
 - You are responsible for compliance with applicable trademark and copyright law.
 
-## Development (monorepo)
+## Development
 
-Source layout:
+See [CONTRIBUTING.md](CONTRIBUTING.md) for build, local vault install, and release steps.
 
-- `obsidian-miku-plugin/` — TypeScript plugin (`npm run build` merges theme CSS)
-- `obsidian-miku-theme/` — Theme CSS source (bundled at build time)
-- `qa/` — Install helpers and guards
+## License
 
-```bash
-npm install --prefix ./obsidian-miku-plugin
-npm run build --prefix ./obsidian-miku-plugin
-npm run typecheck --prefix ./obsidian-miku-plugin
-./qa/install-to-vault.sh /path/to/vault
-```
-
-See [qa/test-environment.md](qa/test-environment.md) for vault install and launch notes.
-
-## Publishing
-
-- Catalog metadata: root `manifest.json`, `versions.json`, `LICENSE`
-- Release: tag `x.y.z` (no `v` prefix) matching `manifest.json` `version`; GitHub Actions attaches `main.js`, `manifest.json`, `styles.css`
-- Submit: [docs/COMMUNITY_SUBMISSION.md](docs/COMMUNITY_SUBMISSION.md)
+MIT — see [LICENSE](LICENSE).

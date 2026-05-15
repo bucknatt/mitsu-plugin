@@ -1,29 +1,20 @@
-# Obsidian Miku Theme Hybrid Base
+# Theme CSS source (contributors)
 
-Visual companion theme for the Miku plugin hybrid architecture.
+Palette and workspace styling for **Miku Hybrid**. This folder is **not** a separate Community install for end users.
 
-## Includes
+Release builds merge [`theme.css`](theme.css) into the plugin’s `styles.css` via `obsidian-miku-plugin/scripts/merge-styles.mjs`.
 
-- Core palette tokens: Color-Hex [19601](https://www.color-hex.com/color-palette/19601) plus extended **pop** hues (cyan `#00e5ff`/`#40e0d0`, hot pink `#ff007f`, sun `#fee440`, violet `#9b5de5`, plum `#540d6e`, sky `#00bbf9`) mapped into gradients, headings, tags, tabs, and callouts
-- Typography tuning
-- Glass-like sidebar and panel styling
-- Subtle glow animation
-- Callout and checkbox accents
-- Graph view color treatment
+## Editing
 
-## Theme Modes
+- Source modules: `src/*.css`
+- Shipped bundle: `theme.css` (keep in sync when editing `src/`)
 
-The theme reacts to `body[data-miku-theme]` values set by the plugin:
+## Theme modes
 
-- `MinimalMiku`
-- `Concert`
-- `NightNeon`
-- `SnowMiku`
+CSS reacts to `body[data-miku-theme]` set by the plugin:
 
-## No-Audio Policy
+- `MinimalMiku`, `Concert`, `NightNeon`, `SnowMiku`
 
-This theme package contains no audio assets or audio-related functionality.
+## No-audio policy
 
-## Packaging
-
-Ship `theme.css` and `manifest.json` for releases.
+No audio assets or audio-related functionality.

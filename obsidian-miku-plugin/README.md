@@ -1,56 +1,39 @@
-# Obsidian Miku Hybrid
+# Miku Hybrid (plugin source)
 
-Runtime plugin for the Hatsune Miku hybrid experience.
+TypeScript source for the **Miku Hybrid** Obsidian community plugin.
 
 ## Features
 
 - Dynamic mode switching: `MinimalMiku`, `Concert`, `NightNeon`, `SnowMiku`
-- Status bar widget
-- Optional top banner widget
-- Optional quote widget with interval control
-- Optional profile card widget
-- Ribbon action + command for quick mode switching
-- Optional **original ASCII decorations** on the dashboard (presets: Minimal, Micro, Panel, Notes, Stage, Waves, Sparkle, Ribbon) and a compact motif on the settings screen
-
-Visual palette for the companion **Miku Theme Hybrid Base** theme is driven by [Color-Hex palette 19601](https://www.color-hex.com/color-palette/19601) (`#373b3e`, `#bec8d1`, `#86cecb`, `#137a7f`, `#e12885`) mapped into CSS variables per mode.
-
-## No-Audio Policy
-
-This plugin intentionally includes no audio capabilities:
-
-- no audio assets
-- no audio APIs
-- no audio settings
-- no audio dependencies
+- Status bar, banner, quote, and profile widgets (optional)
+- Ribbon action and command for quick mode switching
+- Original ASCII dashboard presets
 
 ## Development
 
 ```bash
 npm install
-npm run dev
+npm run dev      # watch build
+npm run build    # production bundle + theme CSS merge
+npm run typecheck
 ```
 
-Build, then copy artifacts into a vault from the **repo root** (see [../qa/test-environment.md](../qa/test-environment.md)):
+From the **repository root**, install into a local vault:
 
 ```bash
-cd /home/cachy/IdeaProjects/cachy/mitsu-plugin/obsidian-miku-plugin && npm run build
-cd /home/cachy/IdeaProjects/cachy/mitsu-plugin
-./qa/install-to-vault.sh /home/cachy/Documents/bfh4
+npm run build --prefix ./obsidian-miku-plugin
+./qa/install-to-vault.sh ./qa/vaults/example-vault
 ```
 
-## Build
+See [../CONTRIBUTING.md](../CONTRIBUTING.md).
 
-`npm run build` bundles `main.js`, syncs root `manifest.json` / `versions.json`, and merges `../obsidian-miku-theme/theme.css` into `styles.css`.
+## Build outputs
 
-Widget-only CSS source: `styles.widgets.css`.
+- `main.js` — bundled plugin (gitignored; attached to GitHub Releases)
+- `styles.css` — widget CSS + merged theme from `../obsidian-miku-theme/theme.css`
+- `styles.widgets.css` — hand-maintained widget styles (source)
+- `manifest.json` — synced from repo root on build
 
-## Release Artifacts
+## No-audio policy
 
-- `main.js`
-- `styles.css` (widgets + bundled theme)
-- `manifest.json` (synced from repo root for catalog)
-
-## Compatibility
-
-- `minAppVersion`: `1.5.0`
-- `isDesktopOnly`: `false`
+No audio assets, APIs, settings, or dependencies.

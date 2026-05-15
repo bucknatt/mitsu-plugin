@@ -1,16 +1,18 @@
+# Dependencies
 obsidian-miku-plugin/node_modules/
+
+# Build outputs (produced by npm run build; shipped via GitHub Releases)
+obsidian-miku-plugin/main.js
+obsidian-miku-plugin/styles.css
+
+# Local plugin dev
 obsidian-miku-plugin/.obsidian/
-qa/__pycache__/
+
+# QA / local vaults (never commit vault data)
 qa/vaults/
+qa/__pycache__/
+qa/reports/
+
+# Editor and OS
+.idea/
 *.log
-.idea
-# Default ignored files
-/shelf/
-/workspace.xml
-# Editor-based HTTP Client requests
-/httpRequests/
-# Ignored default folder with query files
-/queries/
-# Datasource local storage ignored files
-/dataSources/
-/dataSources.local.xml
