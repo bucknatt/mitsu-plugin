@@ -4,7 +4,7 @@
 
 1. **Settings → Community plugins** → disable Restricted mode if needed.
 2. **Browse** → search **Miku** or **Hybrid**.
-3. **Install** → **Enable** **Miku Plugin Hybrid**.
+3. **Install** → **Enable** **Miku Hybrid**.
 4. Confirm status bar shows a mode (e.g. `Miku: MinimalMiku`).
 5. Run **Cycle Miku theme mode** and open the dashboard.
 

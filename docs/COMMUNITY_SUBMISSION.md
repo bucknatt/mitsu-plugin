@@ -1,6 +1,6 @@
 # Community Plugin submission checklist
 
-Submit **Miku Plugin Hybrid** at [community.obsidian.md](https://community.obsidian.md/).
+Submit **Miku Hybrid** at [community.obsidian.md](https://community.obsidian.md/).
 
 ## Prerequisites
 
@@ -23,6 +23,8 @@ Submit **Miku Plugin Hybrid** at [community.obsidian.md](https://community.obsid
 ## Plugin id
 
 `miku-plugin-hybrid` (must match root `manifest.json` `id`).
+
+`name` must not include the word **Plugin** (directory rule). Current display name: **Miku Hybrid**.
 
 ## If review requests changes
 

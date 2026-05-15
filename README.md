@@ -1,4 +1,4 @@
-# Miku Plugin Hybrid
+# Miku Hybrid
 
 Hatsune Miku–inspired theme modes, optional dashboard widgets, and bundled hybrid styling for [Obsidian](https://obsidian.md/).
 
@@ -7,7 +7,7 @@ Hatsune Miku–inspired theme modes, optional dashboard widgets, and bundled hyb
 1. Open **Settings → Community plugins**.
 2. Turn off **Restricted mode** (first-time setup).
 3. Select **Browse**, search for **Miku** or **Hybrid**.
-4. Install **Miku Plugin Hybrid**, then **Enable**.
+4. Install **Miku Hybrid**, then **Enable**.
 
 No separate Appearance theme is required: release builds bundle palette CSS into the plugin `styles.css`.
 

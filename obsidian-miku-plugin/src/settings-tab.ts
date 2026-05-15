@@ -26,7 +26,7 @@ export class MikuSettingTab extends PluginSettingTab {
     const { containerEl } = this;
     containerEl.empty();
 
-    containerEl.createEl("h2", { text: "Miku Plugin Hybrid Settings" });
+    containerEl.createEl("h2", { text: "Miku Hybrid Settings" });
     containerEl.createEl("p", {
       text: "No audio features are included by design."
     });

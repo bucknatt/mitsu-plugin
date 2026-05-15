@@ -43,4 +43,4 @@ fi
 echo "URI anchor note: $ANCHOR_NOTE"
 echo ""
 echo "Next in Obsidian:"
-echo "  Settings → Community plugins → enable \"Miku Plugin Hybrid\"."
+echo "  Settings → Community plugins → enable \"Miku Hybrid\"."

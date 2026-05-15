@@ -31,7 +31,7 @@ cd /home/cachy/IdeaProjects/cachy/mitsu-plugin
 
 - Plugin: `<vault>/.obsidian/plugins/miku-plugin-hybrid/` (`main.js`, root or plugin `manifest.json`, merged `styles.css`)
 
-Default install matches the **Community plugin** bundle: hybrid palette CSS is merged into plugin `styles.css`. Enable **Miku Plugin Hybrid** under Community plugins—no separate Appearance theme.
+Default install matches the **Community plugin** bundle: hybrid palette CSS is merged into plugin `styles.css`. Enable **Miku Hybrid** under Community plugins—no separate Appearance theme.
 
 Split theme dev install (optional):
 
@@ -63,7 +63,7 @@ If the terminal briefly logs **`ENOENT … ~/.config/obsidian/<vaultId>.json`**,
 
 ### Community Plugins search versus side-loaded QA plugins
 
-The **browse/search** modal lists plugins from Obsidian's **Community Plugins** catalog. Plugins installed only via **`./qa/install-to-vault.sh`** (files under `.obsidian/plugins/miku-plugin-hybrid/`) are **not** in that catalog, so **`Show installed only` + query** often shows **zero** hits even though the plugin is loaded. Confirm under **Settings → Community plugins**: the toggle list should include **Miku Plugin Hybrid**. The status bar **`Miku: MinimalMiku`** (or another mode name) confirms the bundle is executing.
+The **browse/search** modal lists plugins from Obsidian's **Community Plugins** catalog. Plugins installed only via **`./qa/install-to-vault.sh`** (files under `.obsidian/plugins/miku-plugin-hybrid/`) are **not** in that catalog, so **`Show installed only` + query** often shows **zero** hits even though the plugin is loaded. Confirm under **Settings → Community plugins**: the toggle list should include **Miku Hybrid**. The status bar **`Miku: MinimalMiku`** (or another mode name) confirms the bundle is executing.
 
 After enabling **Settings → General → Command line interface**, Obsidian often adds **`~/.local/bin/obsidian`** ahead of the distro launcher on **`PATH`**; it only understands **`obsidian <command>`** automation when the GUI is already running, not cold-start **`obsidian /folder`**.
 

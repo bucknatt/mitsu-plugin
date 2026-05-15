@@ -60,7 +60,7 @@ Status: CONDITIONAL PASS (automated); manual UI matrix required on host with Obs
 
 ## Manual Matrix Checklist
 
-- Enable **Miku Plugin Hybrid** only (no Appearance theme); verify palette/modes.
+- Enable **Miku Hybrid** only (no Appearance theme); verify palette/modes.
 - Cycle all theme modes; confirm `data-miku-theme` and status bar label.
 - Toggle settings; persist after restart.
 - Widget mount/unmount; no stale DOM after disable.

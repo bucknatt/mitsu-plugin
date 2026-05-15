@@ -1,4 +1,4 @@
-# Obsidian Miku Plugin Hybrid
+# Obsidian Miku Hybrid
 
 Runtime plugin for the Hatsune Miku hybrid experience.
 
