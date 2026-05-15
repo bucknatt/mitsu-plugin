@@ -108,7 +108,7 @@ export function normalizeAsciiArtPreset(preset: string): MikuAsciiArtPreset {
     : "panel";
 }
 
-export function getDashboardAsciiArt(preset: MikuAsciiArtPreset | string): string | null {
+export function getDashboardAsciiArt(preset: MikuAsciiArtPreset): string | null {
   const normalized = normalizeAsciiArtPreset(preset);
   if (normalized === "off") {
     return null;

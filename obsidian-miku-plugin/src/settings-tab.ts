@@ -26,7 +26,7 @@ export class MikuSettingTab extends PluginSettingTab {
     const { containerEl } = this;
     containerEl.empty();
 
-    new Setting(containerEl).setName("Miku Hybrid Settings").setHeading();
+    new Setting(containerEl).setName("General").setHeading();
 
     new Setting(containerEl).setDesc("No audio features are included by design.");
 
