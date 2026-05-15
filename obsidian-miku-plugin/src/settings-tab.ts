@@ -26,8 +26,6 @@ export class MikuSettingTab extends PluginSettingTab {
     const { containerEl } = this;
     containerEl.empty();
 
-    new Setting(containerEl).setName("General").setHeading();
-
     new Setting(containerEl).setDesc("No audio features are included by design.");
 
     if (this.plugin.settings.asciiArtInSettings) {
