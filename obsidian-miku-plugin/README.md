@@ -30,6 +30,14 @@ npm install
 npm run dev
 ```
 
+Build, then copy artifacts into a vault from the **repo root** (see [../qa/test-environment.md](../qa/test-environment.md)):
+
+```bash
+cd /home/cachy/IdeaProjects/cachy/mitsu-plugin/obsidian-miku-plugin && npm run build
+cd /home/cachy/IdeaProjects/cachy/mitsu-plugin
+./qa/install-to-vault.sh /home/cachy/Documents/bfh4
+```
+
 ## Release Artifacts
 
 - `main.js`

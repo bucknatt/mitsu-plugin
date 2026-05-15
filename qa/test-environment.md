@@ -7,13 +7,23 @@
 
 ## Install Artifacts Into a Vault
 
+**Run from the repository root.** Paths like `./qa/install-to-vault.sh` are relative to `mitsu-plugin/`, not to `mitsu-plugin/qa/`. If your shell is already inside `qa/`, `cd` to the root first (or call `./install-to-vault.sh` from `qa/`).
+
+Build the plugin bundle first so `main.js` is up to date, then install from the repo root.
+
+Active desktop vault:
+
 ```bash
+cd /home/cachy/IdeaProjects/cachy/mitsu-plugin/obsidian-miku-plugin && npm run build
+cd /home/cachy/IdeaProjects/cachy/mitsu-plugin
 ./qa/install-to-vault.sh /home/cachy/Documents/bfh4
 ```
 
-or for isolated testing:
+Isolated clean test vault (still from repo root):
 
 ```bash
+cd /home/cachy/IdeaProjects/cachy/mitsu-plugin/obsidian-miku-plugin && npm run build
+cd /home/cachy/IdeaProjects/cachy/mitsu-plugin
 ./qa/install-to-vault.sh ./qa/vaults/clean-desktop
 ```
 

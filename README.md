@@ -32,6 +32,18 @@ npm run build --prefix ./obsidian-miku-plugin
 npm run typecheck --prefix ./obsidian-miku-plugin
 ```
 
+## Manual testing (install into a vault)
+
+Run QA scripts from the **repository root** (not from inside `qa/`):
+
+```bash
+cd /home/cachy/IdeaProjects/cachy/mitsu-plugin/obsidian-miku-plugin && npm run build
+cd /home/cachy/IdeaProjects/cachy/mitsu-plugin
+./qa/install-to-vault.sh /home/cachy/Documents/bfh4
+```
+
+Then enable **Miku Plugin Hybrid** and the **Miku Theme Hybrid Base** appearance theme in Obsidian. See [qa/test-environment.md](qa/test-environment.md) for launch helpers, vault registration, and troubleshooting.
+
 ## Performance and Guardrails
 
 - Event-driven UI updates only (no constant DOM polling)
