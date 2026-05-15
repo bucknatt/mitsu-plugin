@@ -38,11 +38,17 @@ cd /home/cachy/IdeaProjects/cachy/mitsu-plugin
 ./qa/install-to-vault.sh /home/cachy/Documents/bfh4
 ```
 
+## Build
+
+`npm run build` bundles `main.js`, syncs root `manifest.json` / `versions.json`, and merges `../obsidian-miku-theme/theme.css` into `styles.css`.
+
+Widget-only CSS source: `styles.widgets.css`.
+
 ## Release Artifacts
 
 - `main.js`
-- `styles.css`
-- `manifest.json`
+- `styles.css` (widgets + bundled theme)
+- `manifest.json` (synced from repo root for catalog)
 
 ## Compatibility
 

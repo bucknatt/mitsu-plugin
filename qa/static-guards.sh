@@ -10,6 +10,9 @@ rg "data-miku-theme|data-miku-reduced-motion|miku-glow-intensity" \
 
 rg "body\\[data-miku-theme=" "$ROOT_DIR/obsidian-miku-theme/theme.css" >/dev/null
 
+rg "body\\[data-miku-theme=" "$ROOT_DIR/obsidian-miku-plugin/styles.css" >/dev/null
+rg "Miku hybrid theme \\(bundled" "$ROOT_DIR/obsidian-miku-plugin/styles.css" >/dev/null
+
 rg "mount\\(\\)|update\\(settings|unmount\\(\\)" \
   "$ROOT_DIR/obsidian-miku-plugin/src/modules.ts" >/dev/null
 

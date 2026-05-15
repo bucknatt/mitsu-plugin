@@ -9,24 +9,38 @@ PLUGIN_DST="$VAULT_PATH/.obsidian/plugins/miku-plugin-hybrid"
 THEME_DST_DIR="$VAULT_PATH/.obsidian/themes"
 THEME_DST_FILE="$THEME_DST_DIR/Miku Theme Hybrid Base.css"
 ANCHOR_NOTE="$VAULT_PATH/README.md"
+INSTALL_SPLIT_THEME="${MIKU_INSTALL_SPLIT_THEME:-0}"
 
-mkdir -p "$PLUGIN_DST" "$THEME_DST_DIR"
+mkdir -p "$PLUGIN_DST"
 
 if [[ ! -f "$ANCHOR_NOTE" ]]; then
 	echo "# QA vault anchor" >>"$ANCHOR_NOTE"
 	echo "This file lets \`qa/launch-obsidian.sh\` open this folder via obsidian:// (see qa/test-environment.md)." >>"$ANCHOR_NOTE"
 fi
 
-cp "$PLUGIN_SRC/main.js" "$PLUGIN_DST/main.js"
-cp "$PLUGIN_SRC/manifest.json" "$PLUGIN_DST/manifest.json"
-cp "$PLUGIN_SRC/styles.css" "$PLUGIN_DST/styles.css"
-cp "$ROOT_DIR/obsidian-miku-theme/theme.css" "$THEME_DST_FILE"
+MANIFEST_SRC="$ROOT_DIR/manifest.json"
+if [[ ! -f "$MANIFEST_SRC" ]]; then
+	MANIFEST_SRC="$PLUGIN_SRC/manifest.json"
+fi
 
-echo "Installed plugin + theme into: $VAULT_PATH"
+cp "$PLUGIN_SRC/main.js" "$PLUGIN_DST/main.js"
+cp "$MANIFEST_SRC" "$PLUGIN_DST/manifest.json"
+cp "$PLUGIN_SRC/styles.css" "$PLUGIN_DST/styles.css"
+
+if [[ "$INSTALL_SPLIT_THEME" == "1" ]]; then
+	mkdir -p "$THEME_DST_DIR"
+	cp "$ROOT_DIR/obsidian-miku-theme/theme.css" "$THEME_DST_FILE"
+fi
+
+echo "Installed plugin into: $VAULT_PATH"
 echo "Plugin path: $PLUGIN_DST"
-echo "Theme file: $THEME_DST_FILE"
+if [[ "$INSTALL_SPLIT_THEME" == "1" ]]; then
+	echo "Theme file (split dev mode): $THEME_DST_FILE"
+	echo "  Settings → Appearance → Theme → \"Miku Theme Hybrid Base\""
+else
+	echo "Bundled hybrid CSS in plugin styles.css (catalog-style install)."
+fi
 echo "URI anchor note: $ANCHOR_NOTE"
 echo ""
-echo "Next in Obsidian (required for vault-wide colors):"
-echo "  Settings → Appearance → Theme → pick theme named like the file:"
-echo "  \"Miku Theme Hybrid Base\" (not auto-selected when you enable the plugin)."
+echo "Next in Obsidian:"
+echo "  Settings → Community plugins → enable \"Miku Plugin Hybrid\"."

@@ -447,7 +447,7 @@ var PROFILE_TIPS = [
   "Tip: Ribbon sparkles opens the dashboard.",
   "Tip: Cycle theme modes from the palette or palette command.",
   "Tip: Glow intensity lives in plugin settings.",
-  "Tip: Pair the hybrid theme under Appearance for full color."
+  "Tip: Enable the plugin for bundled hybrid palette styling."
 ];
 var MODE_BLURB = {
   MinimalMiku: "Clean teal lane \u2014 palettes stay soft.",

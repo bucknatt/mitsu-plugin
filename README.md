@@ -1,59 +1,60 @@
-# Obsidian Hatsune Miku Hybrid
+# Miku Plugin Hybrid
 
-This repository contains a hybrid split implementation:
+Hatsune Miku–inspired theme modes, optional dashboard widgets, and bundled hybrid styling for [Obsidian](https://obsidian.md/).
 
-- `obsidian-miku-plugin/`: runtime plugin (theme switching, widgets, dashboard)
-- `obsidian-miku-theme/`: visual theme package (palette, typography, components, animations)
+## Install (Community plugins)
 
-## Scope
+1. Open **Settings → Community plugins**.
+2. Turn off **Restricted mode** (first-time setup).
+3. Select **Browse**, search for **Miku** or **Hybrid**.
+4. Install **Miku Plugin Hybrid**, then **Enable**.
 
-- Full visual Hatsune Miku inspired experience
-- Optional widget modules and dashboard tools
-- Strict no-audio policy for legal/performance clarity
+No separate Appearance theme is required: release builds bundle palette CSS into the plugin `styles.css`.
 
-## Release Artifacts
+## Features
 
-### Plugin package
+- Theme modes: `MinimalMiku`, `Concert`, `NightNeon`, `SnowMiku`
+- Ribbon and command: **Cycle Miku theme mode**
+- Optional status bar, banner, quote, and profile widgets
+- Dashboard with original ASCII decoration presets
+- Reduced-motion and glow intensity settings
 
-- `obsidian-miku-plugin/main.js`
-- `obsidian-miku-plugin/styles.css`
-- `obsidian-miku-plugin/manifest.json`
+## Commands
 
-### Theme package
+| Command | Action |
+|---------|--------|
+| Cycle Miku theme mode | Rotates the active `data-miku-theme` mode |
+| Open Miku dashboard | Opens the Miku panel view |
 
-- `obsidian-miku-theme/theme.css`
-- `obsidian-miku-theme/manifest.json`
+## No-audio policy
 
-## Development
+This plugin includes no audio assets, APIs, or dependencies.
+
+## Legal
+
+- Fan-inspired visuals and original ASCII motifs only—not official Crypton Future Media artwork or audio.
+- Do not redistribute official character media without permission.
+- You are responsible for compliance with applicable trademark and copyright law.
+
+## Development (monorepo)
+
+Source layout:
+
+- `obsidian-miku-plugin/` — TypeScript plugin (`npm run build` merges theme CSS)
+- `obsidian-miku-theme/` — Theme CSS source (bundled at build time)
+- `qa/` — Install helpers and guards
 
 ```bash
 npm install --prefix ./obsidian-miku-plugin
 npm run build --prefix ./obsidian-miku-plugin
 npm run typecheck --prefix ./obsidian-miku-plugin
+./qa/install-to-vault.sh /path/to/vault
 ```
 
-## Manual testing (install into a vault)
+See [qa/test-environment.md](qa/test-environment.md) for vault install and launch notes.
 
-Run QA scripts from the **repository root** (not from inside `qa/`):
+## Publishing
 
-```bash
-cd /home/cachy/IdeaProjects/cachy/mitsu-plugin/obsidian-miku-plugin && npm run build
-cd /home/cachy/IdeaProjects/cachy/mitsu-plugin
-./qa/install-to-vault.sh /home/cachy/Documents/bfh4
-```
-
-Then enable **Miku Plugin Hybrid** and the **Miku Theme Hybrid Base** appearance theme in Obsidian. See [qa/test-environment.md](qa/test-environment.md) for launch helpers, vault registration, and troubleshooting.
-
-## Performance and Guardrails
-
-- Event-driven UI updates only (no constant DOM polling)
-- Widget lifecycle is mount/update/unmount based
-- Reduced-motion mode is supported
-- Avoid copyrighted official audio or proprietary assets
-
-## Legal Safety Notes
-
-- Use inspired palettes and original assets
-- Do not redistribute official Crypton media without permission
-- Keep bundled artwork/iconography either original or licensed
-- ASCII decorations in the plugin are **repo-original** text motifs, not official character artwork
+- Catalog metadata: root `manifest.json`, `versions.json`, `LICENSE`
+- Release: tag `x.y.z` (no `v` prefix) matching `manifest.json` `version`; GitHub Actions attaches `main.js`, `manifest.json`, `styles.css`
+- Submit: [docs/COMMUNITY_SUBMISSION.md](docs/COMMUNITY_SUBMISSION.md)

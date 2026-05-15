@@ -1,11 +1,14 @@
 {
   "name": "obsidian-miku-plugin",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Hatsune Miku inspired Obsidian plugin with widgets and theme switching.",
   "main": "main.js",
   "scripts": {
     "dev": "node esbuild.config.mjs",
-    "build": "node esbuild.config.mjs production",
+    "build": "node scripts/sync-catalog.mjs && node esbuild.config.mjs production && node scripts/merge-styles.mjs",
+    "build:plugin": "node esbuild.config.mjs production",
+    "merge-styles": "node scripts/merge-styles.mjs",
+    "sync-catalog": "node scripts/sync-catalog.mjs",
     "typecheck": "tsc --noEmit"
   },
   "keywords": [
@@ -14,7 +17,7 @@
     "theme",
     "hatsune-miku"
   ],
-  "author": "Your Name",
+  "author": "Nattaya Buck",
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^22.15.21",

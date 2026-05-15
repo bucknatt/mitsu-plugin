@@ -1,0 +1,401 @@
+.miku-plugin-enabled .miku-status-widget {
+  color: var(--miku-text, #d7e3ea);
+  opacity: 0.9;
+}
+
+.miku-status-widget.is-hidden,
+.miku-top-banner.is-hidden,
+.miku-quote-widget.is-hidden,
+.miku-profile-card.is-hidden {
+  display: none;
+}
+
+.miku-top-banner {
+  position: fixed;
+  top: 2.2rem;
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%);
+  z-index: 26;
+  max-width: min(22rem, calc(100vw - 3rem));
+  padding: 0.4rem 0.8rem;
+  border-radius: 999px;
+  color: var(--miku-text, #d7e3ea);
+  background: color-mix(in srgb, var(--miku-secondary-dark, #181c25) 80%, transparent);
+  border: 1px solid color-mix(in srgb, var(--miku-accent, #39c5bb) 52%, transparent);
+  box-shadow:
+    0 0 0.75rem color-mix(in srgb, var(--miku-glow, #b5f5ee) 42%, transparent),
+    0 0 1.5rem color-mix(in srgb, var(--miku-pop, #e12885) 28%, transparent);
+  cursor: grab;
+  user-select: none;
+}
+
+.miku-top-banner.is-dragging {
+  cursor: grabbing;
+}
+
+.miku-quote-widget {
+  position: fixed;
+  right: 1rem;
+  left: auto;
+  bottom: 2.25rem;
+  transform: none;
+  max-width: min(30rem, calc(100vw - 2rem));
+  z-index: 30;
+  padding: 0.7rem 0.8rem;
+  border-radius: 0.8rem;
+  line-height: 1.4;
+  color: var(--miku-text, #d7e3ea);
+  background: color-mix(in srgb, var(--miku-bg, #0f1117) 78%, transparent);
+  border: 1px solid color-mix(in srgb, var(--miku-glow, #b5f5ee) 52%, transparent);
+  box-shadow:
+    0 0 1rem color-mix(in srgb, var(--miku-glow, #b5f5ee) 38%, transparent),
+    0 0 2rem color-mix(in srgb, var(--miku-accent, #40e0d0) 15%, transparent);
+  cursor: grab;
+  user-select: none;
+}
+
+.miku-quote-widget.is-dragging {
+  cursor: grabbing;
+}
+
+@media (max-width: 900px) {
+  .miku-top-banner {
+    left: 1rem;
+    right: 1rem;
+    top: 2.2rem;
+    transform: none;
+    max-width: calc(100vw - 2rem);
+  }
+
+  .miku-quote-widget {
+    left: 1rem;
+    right: 1rem;
+    bottom: 2rem;
+    transform: none;
+    max-width: none;
+  }
+}
+
+/* Bottom-left: keeps the top of the right split (ASCII + dashboard) readable */
+.miku-profile-card {
+  position: fixed;
+  left: 1rem;
+  right: auto;
+  top: auto;
+  bottom: 2.25rem;
+  width: 15rem;
+  max-width: min(15rem, calc(100vw - 2rem));
+  z-index: 30;
+  display: grid;
+  gap: 0.35rem;
+  padding: 0.8rem;
+  border-radius: 0.9rem;
+  cursor: grab;
+  color: var(--miku-text, #d7e3ea);
+  background: color-mix(in srgb, var(--miku-secondary-dark, #181c25) 76%, transparent);
+  border: 1px solid color-mix(in srgb, var(--miku-accent, #40e0d0) 50%, transparent);
+  box-shadow:
+    0 0 0.85rem color-mix(in srgb, var(--miku-glow, #b5f5ee) 35%, transparent),
+    0 0 1.6rem color-mix(in srgb, var(--miku-pop, #e12885) 22%, transparent);
+  transition:
+    transform 140ms ease,
+    box-shadow 180ms ease;
+}
+
+.miku-profile-card.is-dragging {
+  cursor: grabbing;
+}
+
+.miku-profile-card:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 0 1rem color-mix(in srgb, var(--miku-glow, #b5f5ee) 45%, transparent),
+    0 0 2rem color-mix(in srgb, var(--miku-pop, #e12885) 30%, transparent);
+}
+
+.miku-profile-card:active {
+  transform: translateY(0);
+}
+
+.miku-profile-card:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--miku-accent, #40e0d0) 85%, transparent);
+  outline-offset: 2px;
+}
+
+.miku-profile-card.is-compact {
+  width: 12rem;
+  padding: 0.6rem;
+  gap: 0.25rem;
+}
+
+.miku-profile-card h4 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  background: linear-gradient(
+    120deg,
+    var(--miku-glow, #b5f5ee),
+    var(--miku-accent, #40e0d0),
+    var(--miku-pop, #e12885)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.miku-profile-card p {
+  margin: 0;
+}
+
+.miku-profile-card__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.miku-profile-badge {
+  flex-shrink: 0;
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.15rem 0.42rem;
+  border-radius: 999px;
+  color: color-mix(in srgb, var(--miku-secondary-dark, #181c25) 12%, var(--miku-text, #d7e3ea));
+  background: color-mix(in srgb, var(--miku-accent, #40e0d0) 38%, transparent);
+  border: 1px solid color-mix(in srgb, var(--miku-pop, #e12885) 45%, transparent);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--miku-glow, #b5f5ee) 28%, transparent);
+}
+
+.miku-profile-card__subtitle {
+  font-size: 0.78rem;
+  line-height: 1.35;
+  opacity: 0.92;
+  color: color-mix(in srgb, var(--miku-text, #d7e3ea) 88%, var(--miku-glow, #b5f5ee));
+}
+
+.miku-profile-card__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.28rem;
+  margin-top: 0.1rem;
+}
+
+.miku-profile-chip {
+  font-size: 0.65rem;
+  line-height: 1.2;
+  padding: 0.18rem 0.42rem;
+  border-radius: 0.42rem;
+  color: color-mix(in srgb, var(--miku-text, #d7e3ea) 92%, transparent);
+  background: color-mix(in srgb, var(--miku-secondary-dark, #181c25) 45%, transparent);
+  border: 1px solid color-mix(in srgb, var(--miku-glow, #b5f5ee) 28%, transparent);
+}
+
+.miku-profile-chip--glow {
+  border-color: color-mix(in srgb, var(--miku-pop, #e12885) 42%, transparent);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--miku-glow, #b5f5ee) 22%, transparent);
+}
+
+.miku-profile-card__divider {
+  height: 1px;
+  margin: 0.05rem 0;
+  border-radius: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--miku-accent, #40e0d0) 55%, transparent),
+    color-mix(in srgb, var(--miku-pop, #e12885) 40%, transparent),
+    transparent
+  );
+}
+
+.miku-profile-card__tip {
+  font-size: 0.72rem;
+  line-height: 1.35;
+  font-style: italic;
+  opacity: 0.88;
+}
+
+.miku-profile-card__foot {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: 0.05rem;
+  padding-top: 0.2rem;
+}
+
+.miku-profile-card__cta {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: color-mix(in srgb, var(--miku-glow, #b5f5ee) 82%, var(--text-accent, #fee440));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .miku-profile-card {
+    transition: none;
+  }
+
+  .miku-profile-card:hover {
+    transform: none;
+  }
+}
+
+.miku-profile-icon {
+  margin-top: 0.2rem;
+  color: var(--miku-glow, #b5f5ee);
+  opacity: 0.95;
+  filter: drop-shadow(0 0 0.35rem color-mix(in srgb, var(--miku-glow, #b5f5ee) 65%, transparent))
+    drop-shadow(0 0 0.85rem color-mix(in srgb, var(--miku-pop, #e12885) 35%, transparent));
+}
+
+.miku-dashboard {
+  padding: 1rem;
+  color: var(--miku-text, #d7e3ea);
+}
+
+.miku-dashboard.is-compact {
+  padding: 0.7rem;
+}
+
+.miku-dashboard-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin: 0.8rem 0;
+}
+
+.miku-dashboard-actions button {
+  border-radius: 0.6rem;
+  border: 1px solid color-mix(in srgb, var(--miku-accent, #40e0d0) 58%, transparent);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--miku-pop, #e12885) 42%, transparent),
+    0 0 22px color-mix(in srgb, var(--text-accent, #fee440) 32%, transparent),
+    0 0 42px color-mix(in srgb, var(--miku-glow, #b5f5ee) 22%, transparent);
+  padding: 0.35rem 0.7rem;
+}
+
+.miku-progress {
+  margin-top: 0.8rem;
+  padding: 0.7rem;
+  border-radius: 0.8rem;
+  background: color-mix(in srgb, var(--miku-secondary-dark, #181c25) 80%, transparent);
+}
+
+.miku-checklist-actions {
+  display: flex;
+  gap: 0.45rem;
+  margin: 0.5rem 0 0.35rem;
+}
+
+.miku-checklist-input {
+  min-width: 0;
+  flex: 1;
+  border-radius: 0.45rem;
+  padding: 0.22rem 0.45rem;
+}
+
+.miku-checklist-actions button {
+  border-radius: 0.45rem;
+  padding: 0.2rem 0.45rem;
+  border: 1px solid color-mix(in srgb, var(--miku-accent, #40e0d0) 42%, transparent);
+  background: color-mix(in srgb, var(--miku-bg, #0f1117) 70%, transparent);
+}
+
+.miku-checklist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.miku-checklist-item {
+  display: flex;
+  align-items: center;
+}
+
+.miku-checklist-label {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.86rem;
+}
+
+.miku-checklist-item.is-done span {
+  text-decoration: line-through;
+  opacity: 0.72;
+}
+
+.miku-checklist-empty {
+  font-size: 0.8rem;
+  opacity: 0.78;
+}
+
+.miku-equalizer {
+  margin-top: 1rem;
+  height: 2rem;
+  display: flex;
+  gap: 0.25rem;
+  align-items: end;
+}
+
+.miku-eq-bar {
+  width: 0.35rem;
+  height: 100%;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--miku-accent, #40e0d0) 82%, var(--miku-glow, #b5f5ee));
+  box-shadow: 0 0 0.55rem color-mix(in srgb, var(--miku-glow, #b5f5ee) 55%, transparent);
+  animation: mikuEq 1.1s ease-in-out infinite;
+}
+
+.miku-eq-bar:nth-child(2n) {
+  animation-duration: 0.9s;
+}
+
+.miku-eq-bar:nth-child(3n) {
+  animation-duration: 1.3s;
+}
+
+@keyframes mikuEq {
+  0%,
+  100% {
+    transform: scaleY(0.35);
+  }
+  50% {
+    transform: scaleY(0.95);
+  }
+}
+
+/* Original ASCII motifs — bundled theme supplies --miku-* when plugin is enabled */
+.miku-ascii {
+  margin: 0 0 0.75rem;
+  padding: 0.5rem 0.75rem;
+  overflow-x: auto;
+  font-family: var(--font-monospace-theme), ui-monospace, "IBM Plex Mono", monospace;
+  font-size: 0.72rem;
+  line-height: 1.25;
+  color: var(--miku-accent, #86cecb);
+  text-shadow:
+    0 0 0.45rem color-mix(in srgb, var(--miku-glow, #b5f5ee) 62%, transparent),
+    0 0 1.1rem color-mix(in srgb, var(--miku-pop, #e12885) 45%, transparent);
+  background: color-mix(in srgb, var(--miku-secondary-dark, #1e2329) 55%, transparent);
+  border: 1px solid color-mix(in srgb, var(--miku-pop, #e12885) 45%, var(--miku-accent, #86cecb));
+  box-shadow:
+    0 0 1.1rem color-mix(in srgb, var(--miku-glow, #b5f5ee) 28%, transparent),
+    inset 0 0 1.25rem color-mix(in srgb, var(--miku-accent, #40e0d0) 12%, transparent);
+  border-radius: 0.65rem;
+}
+
+.miku-dashboard.is-compact .miku-ascii {
+  font-size: 0.62rem;
+  padding: 0.35rem 0.55rem;
+  margin-bottom: 0.5rem;
+}
+
+.miku-ascii--settings {
+  font-size: 0.68rem;
+  margin-bottom: 1rem;
+}

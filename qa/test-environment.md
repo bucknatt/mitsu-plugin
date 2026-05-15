@@ -29,10 +29,17 @@ cd /home/cachy/IdeaProjects/cachy/mitsu-plugin
 
 ## Expected Install Paths
 
-- Plugin: `<vault>/.obsidian/plugins/miku-plugin-hybrid/`
-- Theme CSS: `<vault>/.obsidian/themes/Miku Theme Hybrid Base.css`
+- Plugin: `<vault>/.obsidian/plugins/miku-plugin-hybrid/` (`main.js`, root or plugin `manifest.json`, merged `styles.css`)
 
-The plugin only sets **`body.miku-plugin-enabled`** and **`data-miku-theme`** (plus widgets). Palette and workspace styling live in **`Miku Theme Hybrid Base.css`**. You must choose that entry under **Settings → Appearance → Theme**—enabling community plugins alone does **not** load it. Cycle modes with ribbon / **Cycle Miku theme mode** to see **`data-miku-theme`** palettes change once the theme is active.
+Default install matches the **Community plugin** bundle: hybrid palette CSS is merged into plugin `styles.css`. Enable **Miku Plugin Hybrid** under Community plugins—no separate Appearance theme.
+
+Split theme dev install (optional):
+
+```bash
+MIKU_INSTALL_SPLIT_THEME=1 ./qa/install-to-vault.sh /path/to/vault
+```
+
+That also copies `<vault>/.obsidian/themes/Miku Theme Hybrid Base.css`; pick it under **Settings → Appearance → Theme** when testing the legacy split layout.
 
 ## Notes
 
