@@ -1,6 +1,6 @@
 {
   "name": "obsidian-miku-plugin",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Hatsune Miku inspired Obsidian plugin with widgets and theme switching.",
   "main": "main.js",
   "scripts": {

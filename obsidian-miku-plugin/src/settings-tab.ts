@@ -26,10 +26,9 @@ export class MikuSettingTab extends PluginSettingTab {
     const { containerEl } = this;
     containerEl.empty();
 
-    containerEl.createEl("h2", { text: "Miku Hybrid Settings" });
-    containerEl.createEl("p", {
-      text: "No audio features are included by design."
-    });
+    new Setting(containerEl).setName("Miku Hybrid Settings").setHeading();
+
+    new Setting(containerEl).setDesc("No audio features are included by design.");
 
     if (this.plugin.settings.asciiArtInSettings) {
       const pre = containerEl.createEl("pre", { cls: "miku-ascii miku-ascii--settings" });
@@ -144,10 +143,11 @@ export class MikuSettingTab extends PluginSettingTab {
         });
       });
 
-    containerEl.createEl("h3", { text: "ASCII decoration" });
-    containerEl.createEl("p", {
-      text: "Tiny original monospace motifs (not licensed character art)."
-    });
+    new Setting(containerEl).setName("ASCII decoration").setHeading();
+
+    new Setting(containerEl).setDesc(
+      "Tiny original monospace motifs (not licensed character art)."
+    );
 
     new Setting(containerEl)
       .setName("ASCII art preset (dashboard)")

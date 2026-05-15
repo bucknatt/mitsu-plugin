@@ -1,5 +1,6 @@
 import { Notice, Plugin, setIcon } from "obsidian";
 import type { MikuPluginSettings, MikuThemeMode } from "./settings";
+import { applyDragPosition, clearDragPosition, readDragPosition } from "./widget-layout";
 
 const PROFILE_TIPS = [
   "Tip: Ribbon sparkles opens the dashboard.",
@@ -93,12 +94,9 @@ class BannerWidget implements ManagedWidget {
     this.element.setText(settings.bannerText);
 
     if (settings.bannerPosition) {
-      this.applyPosition(settings.bannerPosition.x, settings.bannerPosition.y);
-    } else {
-      this.element.style.left = "";
-      this.element.style.top = "";
-      this.element.style.right = "";
-      this.element.style.transform = "";
+      applyDragPosition(this.element, settings.bannerPosition.x, settings.bannerPosition.y);
+    } else if (!this.element.classList.contains("is-dragging")) {
+      clearDragPosition(this.element);
     }
   }
 
@@ -130,7 +128,7 @@ class BannerWidget implements ManagedWidget {
     const maxY = Math.max(8, window.innerHeight - this.element.offsetHeight - 8);
     const nextX = Math.min(maxX, Math.max(8, event.clientX - this.dragOffsetX));
     const nextY = Math.min(maxY, Math.max(8, event.clientY - this.dragOffsetY));
-    this.applyPosition(nextX, nextY);
+    applyDragPosition(this.element, nextX, nextY);
   };
 
   private onPointerUp = (): void => {
@@ -139,25 +137,11 @@ class BannerWidget implements ManagedWidget {
     }
     this.dragging = false;
     this.element.classList.remove("is-dragging");
-    const left = Math.round(parseFloat(this.element.style.left || "0"));
-    const top = Math.round(parseFloat(this.element.style.top || "0"));
-    if (!Number.isFinite(left) || !Number.isFinite(top)) {
-      return;
-    }
+    const { x, y } = readDragPosition(this.element);
     const host = this.plugin as unknown as { settings: MikuPluginSettings };
-    host.settings.bannerPosition = { x: left, y: top };
+    host.settings.bannerPosition = { x, y };
     void this.saveAndRefresh();
   };
-
-  private applyPosition(x: number, y: number): void {
-    if (!this.element) {
-      return;
-    }
-    this.element.style.left = `${x}px`;
-    this.element.style.top = `${y}px`;
-    this.element.style.right = "auto";
-    this.element.style.transform = "none";
-  }
 }
 
 class QuoteWidget implements ManagedWidget {
@@ -190,13 +174,9 @@ class QuoteWidget implements ManagedWidget {
     this.element.toggleClass("is-hidden", !settings.quoteEnabled);
     this.element.setText(`"${QUOTES[this.quoteIndex % QUOTES.length]}"`);
     if (settings.quotePosition) {
-      this.applyPosition(settings.quotePosition.x, settings.quotePosition.y);
+      applyDragPosition(this.element, settings.quotePosition.x, settings.quotePosition.y);
     } else if (!this.element.classList.contains("is-dragging")) {
-      this.element.style.right = "";
-      this.element.style.bottom = "";
-      this.element.style.left = "";
-      this.element.style.top = "";
-      this.element.style.transform = "";
+      clearDragPosition(this.element);
     }
 
     if (!settings.quoteEnabled) {
@@ -250,7 +230,7 @@ class QuoteWidget implements ManagedWidget {
     const maxY = Math.max(8, window.innerHeight - this.element.offsetHeight - 8);
     const nextX = Math.min(maxX, Math.max(8, event.clientX - this.dragOffsetX));
     const nextY = Math.min(maxY, Math.max(8, event.clientY - this.dragOffsetY));
-    this.applyPosition(nextX, nextY);
+    applyDragPosition(this.element, nextX, nextY);
   };
 
   private onPointerUp = (): void => {
@@ -259,26 +239,11 @@ class QuoteWidget implements ManagedWidget {
     }
     this.dragging = false;
     this.element.classList.remove("is-dragging");
-    const left = Math.round(parseFloat(this.element.style.left || "0"));
-    const top = Math.round(parseFloat(this.element.style.top || "0"));
-    if (!Number.isFinite(left) || !Number.isFinite(top)) {
-      return;
-    }
+    const { x, y } = readDragPosition(this.element);
     const host = this.plugin as unknown as { settings: MikuPluginSettings };
-    host.settings.quotePosition = { x: left, y: top };
+    host.settings.quotePosition = { x, y };
     void this.saveAndRefresh();
   };
-
-  private applyPosition(x: number, y: number): void {
-    if (!this.element) {
-      return;
-    }
-    this.element.style.left = `${x}px`;
-    this.element.style.top = `${y}px`;
-    this.element.style.right = "auto";
-    this.element.style.bottom = "auto";
-    this.element.style.transform = "none";
-  }
 }
 
 class ProfileCardWidget implements ManagedWidget {
@@ -378,12 +343,13 @@ class ProfileCardWidget implements ManagedWidget {
         settings.profileCardEnabled ? "0" : "-1"
       );
       if (settings.profileCardPosition) {
-        this.applyPosition(settings.profileCardPosition.x, settings.profileCardPosition.y);
+        applyDragPosition(
+          this.element,
+          settings.profileCardPosition.x,
+          settings.profileCardPosition.y
+        );
       } else if (!this.element.classList.contains("is-dragging")) {
-        this.element.style.left = "";
-        this.element.style.top = "";
-        this.element.style.right = "";
-        this.element.style.bottom = "";
+        clearDragPosition(this.element);
       }
     }
 
@@ -468,7 +434,7 @@ class ProfileCardWidget implements ManagedWidget {
     const nextX = Math.min(maxX, Math.max(8, event.clientX - this.dragOffsetX));
     const nextY = Math.min(maxY, Math.max(8, event.clientY - this.dragOffsetY));
     this.movedWhileDragging = true;
-    this.applyPosition(nextX, nextY);
+    applyDragPosition(this.element, nextX, nextY);
   };
 
   private onPointerUp = (): void => {
@@ -481,25 +447,11 @@ class ProfileCardWidget implements ManagedWidget {
       return;
     }
     this.suppressNextClick = true;
-    const left = Math.round(parseFloat(this.element.style.left || "0"));
-    const top = Math.round(parseFloat(this.element.style.top || "0"));
-    if (!Number.isFinite(left) || !Number.isFinite(top)) {
-      return;
-    }
+    const { x, y } = readDragPosition(this.element);
     const host = this.plugin as unknown as { settings: MikuPluginSettings };
-    host.settings.profileCardPosition = { x: left, y: top };
+    host.settings.profileCardPosition = { x, y };
     void this.saveAndRefresh();
   };
-
-  private applyPosition(x: number, y: number): void {
-    if (!this.element) {
-      return;
-    }
-    this.element.style.left = `${x}px`;
-    this.element.style.top = `${y}px`;
-    this.element.style.right = "auto";
-    this.element.style.bottom = "auto";
-  }
 }
 
 export class WidgetManager {
