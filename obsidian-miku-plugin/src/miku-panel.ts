@@ -1,19 +1,16 @@
 import { ItemView, Notice, WorkspaceLeaf } from "obsidian";
 import { getDashboardAsciiArt, normalizeAsciiArtPreset } from "./ascii-art";
+import type { MikuPluginHost } from "./miku-plugin-host";
+import { executeCommand } from "./obsidian-command";
 import type { MikuDashboardGoal, MikuPluginSettings } from "./settings";
 
 export const MIKU_PANEL_VIEW = "miku-dashboard-view";
 
-interface DashboardHost {
-  settings: MikuPluginSettings;
-  saveAndRefresh(): Promise<void>;
-}
-
 export class MikuPanelView extends ItemView {
   private settings: MikuPluginSettings;
-  private host: DashboardHost;
+  private readonly host: MikuPluginHost;
 
-  constructor(leaf: WorkspaceLeaf, host: DashboardHost) {
+  constructor(leaf: WorkspaceLeaf, host: MikuPluginHost) {
     super(leaf);
     this.host = host;
     this.settings = host.settings;
@@ -24,7 +21,7 @@ export class MikuPanelView extends ItemView {
   }
 
   getDisplayText(): string {
-    return "Miku Dashboard";
+    return "Miku dashboard";
   }
 
   setSettings(settings: MikuPluginSettings): void {
@@ -55,20 +52,20 @@ export class MikuPanelView extends ItemView {
       pre.textContent = ascii;
     }
 
-    const title = container.createEl("h2", { text: "Miku Dashboard" });
+    const title = container.createEl("h2", { text: "Miku dashboard" });
     title.addClass("miku-dashboard-title");
     container.createEl("p", {
       text: "A visual control surface for your Obsidian workflow."
     });
 
     const actions = container.createDiv({ cls: "miku-dashboard-actions" });
-    const daily = actions.createEl("button", { text: "Open Daily Note" });
+    const daily = actions.createEl("button", { text: "Open daily note" });
     daily.onclick = () => this.openCommand("daily-notes");
-    const toggle = actions.createEl("button", { text: "Cycle Theme Mode" });
+    const toggle = actions.createEl("button", { text: "Cycle theme mode" });
     toggle.onclick = () => this.openCommand("miku-plugin-hybrid:miku-cycle-theme");
 
     const progress = container.createDiv({ cls: "miku-progress" });
-    progress.createEl("h4", { text: "Focus Progress" });
+    progress.createEl("h4", { text: "Focus progress" });
     progress.createEl("p", { text: "Track goals with your dashboard checklist." });
 
     const checklistActions = progress.createDiv({ cls: "miku-checklist-actions" });
@@ -77,11 +74,11 @@ export class MikuPanelView extends ItemView {
       placeholder: "New goal..."
     });
     newGoalInput.addClass("miku-checklist-input");
-    const addGoal = checklistActions.createEl("button", { text: "+ Add goal" });
+    const addGoal = checklistActions.createEl("button", { text: "+ add goal" });
     addGoal.onclick = () => {
       void this.addGoal(newGoalInput);
     };
-    newGoalInput.addEventListener("keydown", (event) => {
+    newGoalInput.addEventListener("keydown", (event: KeyboardEvent) => {
       if (event.key === "Enter") {
         event.preventDefault();
         void this.addGoal(newGoalInput);
@@ -96,7 +93,7 @@ export class MikuPanelView extends ItemView {
     if (this.settings.dashboardGoals.length === 0) {
       checklist.createEl("li", {
         cls: "miku-checklist-empty",
-        text: "No goals yet. Add one with + Add goal."
+        text: "No goals yet. Add one with + add goal."
       });
     } else {
       for (const goal of this.settings.dashboardGoals) {
@@ -120,10 +117,7 @@ export class MikuPanelView extends ItemView {
   }
 
   private openCommand(commandId: string): void {
-    const app = this.app as {
-      commands?: { executeCommandById?: (id: string) => boolean };
-    };
-    app.commands?.executeCommandById?.(commandId);
+    executeCommand(this.app, commandId);
   }
 
   private async toggleGoal(id: string, done: boolean): Promise<void> {

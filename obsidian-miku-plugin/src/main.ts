@@ -2,21 +2,22 @@ import { Notice, Plugin, WorkspaceLeaf } from "obsidian";
 import { DEFAULT_SETTINGS, MikuPluginSettings } from "./settings";
 import { MikuSettingTab } from "./settings-tab";
 import { MIKU_PANEL_VIEW, MikuPanelView } from "./miku-panel";
+import type { MikuPluginHost } from "./miku-plugin-host";
 import { ModuleRegistry } from "./modules";
 import { normalizeAsciiArtPreset } from "./ascii-art";
 import { ThemeManager } from "./theme-manager";
 
-export default class MikuPlugin extends Plugin {
+export default class MikuPlugin extends Plugin implements MikuPluginHost {
   settings: MikuPluginSettings = { ...DEFAULT_SETTINGS };
   private readonly themeManager = new ThemeManager();
   private moduleRegistry: ModuleRegistry | null = null;
-  private dashboardLeaf: WorkspaceLeaf | null = null;
 
   async onload(): Promise<void> {
     await this.loadPluginSettings();
 
     this.themeManager.apply(this.settings);
     this.moduleRegistry = new ModuleRegistry(
+      this,
       this,
       () => this.openDashboardView(),
       () => this.saveAndRefresh()
@@ -49,7 +50,6 @@ export default class MikuPlugin extends Plugin {
   onunload(): void {
     void this.moduleRegistry?.unmountAll();
     this.moduleRegistry = null;
-    this.dashboardLeaf = null;
     this.themeManager.cleanup();
   }
 
@@ -57,10 +57,16 @@ export default class MikuPlugin extends Plugin {
     await this.saveData(this.settings);
     this.themeManager.apply(this.settings);
     await this.moduleRegistry?.updateAll(this.settings);
-    const openView = this.dashboardLeaf?.view;
-    if (openView instanceof MikuPanelView) {
-      openView.setSettings(this.settings);
-    }
+    this.getDashboardView()?.setSettings(this.settings);
+  }
+
+  private getDashboardLeaf(): WorkspaceLeaf | undefined {
+    return this.app.workspace.getLeavesOfType(MIKU_PANEL_VIEW)[0];
+  }
+
+  private getDashboardView(): MikuPanelView | undefined {
+    const view = this.getDashboardLeaf()?.view;
+    return view instanceof MikuPanelView ? view : undefined;
   }
 
   private async loadPluginSettings(): Promise<void> {
@@ -79,22 +85,22 @@ export default class MikuPlugin extends Plugin {
   }
 
   private async openDashboardView(): Promise<void> {
-    this.dashboardLeaf = this.app.workspace.getLeavesOfType(MIKU_PANEL_VIEW)[0] ?? null;
+    let leaf = this.getDashboardLeaf();
 
-    if (!this.dashboardLeaf) {
-      this.dashboardLeaf = this.app.workspace.getRightLeaf(false);
-      await this.dashboardLeaf?.setViewState({
-        type: MIKU_PANEL_VIEW,
-        active: true
-      });
+    if (!leaf) {
+      const newLeaf = this.app.workspace.getRightLeaf(false);
+      if (newLeaf) {
+        await newLeaf.setViewState({
+          type: MIKU_PANEL_VIEW,
+          active: true
+        });
+        leaf = newLeaf;
+      }
     }
 
-    if (this.dashboardLeaf) {
-      this.app.workspace.revealLeaf(this.dashboardLeaf);
-      const view = this.dashboardLeaf.view;
-      if (view instanceof MikuPanelView) {
-        view.setSettings(this.settings);
-      }
+    if (leaf) {
+      void this.app.workspace.revealLeaf(leaf);
+      this.getDashboardView()?.setSettings(this.settings);
     }
   }
 }

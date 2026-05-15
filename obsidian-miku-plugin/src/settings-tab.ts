@@ -1,4 +1,12 @@
-import { App, PluginSettingTab, Setting } from "obsidian";
+import {
+  App,
+  DropdownComponent,
+  PluginSettingTab,
+  Setting,
+  SliderComponent,
+  TextComponent,
+  ToggleComponent
+} from "obsidian";
 import { getSettingsAsciiArt, normalizeAsciiArtPreset } from "./ascii-art";
 import MikuPlugin from "./main";
 import { MikuAsciiArtPreset, MikuThemeMode } from "./settings";
@@ -36,108 +44,110 @@ export class MikuSettingTab extends PluginSettingTab {
     new Setting(containerEl)
       .setName("Theme mode")
       .setDesc("Choose the active Miku mode")
-      .addDropdown((dropdown) => {
-        THEME_MODES.forEach((mode) => dropdown.addOption(mode, mode));
+      .addDropdown((dropdown: DropdownComponent) => {
+        for (const mode of THEME_MODES) {
+          dropdown.addOption(mode, mode);
+        }
         dropdown.setValue(this.plugin.settings.themeMode);
-        dropdown.onChange(async (value) => {
+        dropdown.onChange((value: string) => {
           this.plugin.settings.themeMode = value as MikuThemeMode;
-          await this.plugin.saveAndRefresh();
+          void this.plugin.saveAndRefresh();
         });
       });
 
     new Setting(containerEl)
       .setName("Status bar widget")
-      .addToggle((toggle) => {
+      .addToggle((toggle: ToggleComponent) => {
         toggle.setValue(this.plugin.settings.statusBarEnabled);
-        toggle.onChange(async (value) => {
+        toggle.onChange((value: boolean) => {
           this.plugin.settings.statusBarEnabled = value;
-          await this.plugin.saveAndRefresh();
+          void this.plugin.saveAndRefresh();
         });
       });
 
     new Setting(containerEl)
       .setName("Top banner widget")
-      .addToggle((toggle) => {
+      .addToggle((toggle: ToggleComponent) => {
         toggle.setValue(this.plugin.settings.bannerEnabled);
-        toggle.onChange(async (value) => {
+        toggle.onChange((value: boolean) => {
           this.plugin.settings.bannerEnabled = value;
-          await this.plugin.saveAndRefresh();
+          void this.plugin.saveAndRefresh();
         });
       });
 
     new Setting(containerEl)
       .setName("Banner text")
       .setDesc("Shown at top when banner is enabled")
-      .addText((text) => {
+      .addText((text: TextComponent) => {
         text.setValue(this.plugin.settings.bannerText);
-        text.onChange(async (value) => {
+        text.onChange((value: string) => {
           this.plugin.settings.bannerText = value.trim() || "Miku Mode Active";
-          await this.plugin.saveAndRefresh();
+          void this.plugin.saveAndRefresh();
         });
       });
 
     new Setting(containerEl)
       .setName("Quote widget")
-      .addToggle((toggle) => {
+      .addToggle((toggle: ToggleComponent) => {
         toggle.setValue(this.plugin.settings.quoteEnabled);
-        toggle.onChange(async (value) => {
+        toggle.onChange((value: boolean) => {
           this.plugin.settings.quoteEnabled = value;
-          await this.plugin.saveAndRefresh();
+          void this.plugin.saveAndRefresh();
         });
       });
 
     new Setting(containerEl)
       .setName("Quote interval (seconds)")
-      .addSlider((slider) => {
+      .addSlider((slider: SliderComponent) => {
         slider.setLimits(10, 120, 5);
         slider.setValue(this.plugin.settings.quoteIntervalSeconds);
         slider.setDynamicTooltip();
-        slider.onChange(async (value) => {
+        slider.onChange((value: number) => {
           this.plugin.settings.quoteIntervalSeconds = value;
-          await this.plugin.saveAndRefresh();
+          void this.plugin.saveAndRefresh();
         });
       });
 
     new Setting(containerEl)
       .setName("Profile card widget")
-      .addToggle((toggle) => {
+      .addToggle((toggle: ToggleComponent) => {
         toggle.setValue(this.plugin.settings.profileCardEnabled);
-        toggle.onChange(async (value) => {
+        toggle.onChange((value: boolean) => {
           this.plugin.settings.profileCardEnabled = value;
-          await this.plugin.saveAndRefresh();
+          void this.plugin.saveAndRefresh();
         });
       });
 
     new Setting(containerEl)
       .setName("Compact dashboard")
-      .addToggle((toggle) => {
+      .addToggle((toggle: ToggleComponent) => {
         toggle.setValue(this.plugin.settings.compactDashboard);
-        toggle.onChange(async (value) => {
+        toggle.onChange((value: boolean) => {
           this.plugin.settings.compactDashboard = value;
-          await this.plugin.saveAndRefresh();
+          void this.plugin.saveAndRefresh();
         });
       });
 
     new Setting(containerEl)
       .setName("Glow intensity")
       .setDesc("Scales graph/highlight glow plus global glow strength; lower if text feels busy")
-      .addSlider((slider) => {
+      .addSlider((slider: SliderComponent) => {
         slider.setLimits(0.1, 1, 0.05);
         slider.setValue(this.plugin.settings.glowIntensity);
         slider.setDynamicTooltip();
-        slider.onChange(async (value) => {
+        slider.onChange((value: number) => {
           this.plugin.settings.glowIntensity = value;
-          await this.plugin.saveAndRefresh();
+          void this.plugin.saveAndRefresh();
         });
       });
 
     new Setting(containerEl)
       .setName("Reduced motion")
-      .addToggle((toggle) => {
+      .addToggle((toggle: ToggleComponent) => {
         toggle.setValue(this.plugin.settings.reducedMotion);
-        toggle.onChange(async (value) => {
+        toggle.onChange((value: boolean) => {
           this.plugin.settings.reducedMotion = value;
-          await this.plugin.saveAndRefresh();
+          void this.plugin.saveAndRefresh();
         });
       });
 
@@ -150,25 +160,25 @@ export class MikuSettingTab extends PluginSettingTab {
     new Setting(containerEl)
       .setName("ASCII art preset (dashboard)")
       .setDesc("Shown at the top of the Miku dashboard view.")
-      .addDropdown((dropdown) => {
-        ASCII_PRESET_OPTIONS.forEach(({ id, label }) => dropdown.addOption(id, label));
+      .addDropdown((dropdown: DropdownComponent) => {
+        for (const { id, label } of ASCII_PRESET_OPTIONS) {
+          dropdown.addOption(id, label);
+        }
         dropdown.setValue(normalizeAsciiArtPreset(this.plugin.settings.asciiArtPreset));
-        dropdown.onChange(async (value) => {
+        dropdown.onChange((value: string) => {
           this.plugin.settings.asciiArtPreset = value as MikuAsciiArtPreset;
-          await this.plugin.saveAndRefresh();
-          this.display();
+          void this.plugin.saveAndRefresh().then(() => this.display());
         });
       });
 
     new Setting(containerEl)
       .setName("ASCII art on this settings page")
       .setDesc("Show a compact motif above (refreshes this screen).")
-      .addToggle((toggle) => {
+      .addToggle((toggle: ToggleComponent) => {
         toggle.setValue(this.plugin.settings.asciiArtInSettings);
-        toggle.onChange(async (value) => {
+        toggle.onChange((value: boolean) => {
           this.plugin.settings.asciiArtInSettings = value;
-          await this.plugin.saveAndRefresh();
-          this.display();
+          void this.plugin.saveAndRefresh().then(() => this.display());
         });
       });
   }

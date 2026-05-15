@@ -1,4 +1,5 @@
 import { Notice, Plugin, setIcon } from "obsidian";
+import type { MikuPluginHost } from "./miku-plugin-host";
 import type { MikuPluginSettings, MikuThemeMode } from "./settings";
 import { applyDragPosition, clearDragPosition, readDragPosition } from "./widget-layout";
 
@@ -72,18 +73,18 @@ class BannerWidget implements ManagedWidget {
   private dragging = false;
 
   constructor(
-    private readonly plugin: Plugin,
+    private readonly host: MikuPluginHost,
     private readonly saveAndRefresh: () => Promise<void>
   ) {}
 
   mount(): void {
-    this.element = document.createElement("div");
+    this.element = activeDocument.createElement("div");
     this.element.className = "miku-top-banner";
     this.element.setAttribute("title", "Drag to move banner");
     this.element.addEventListener("pointerdown", (event) => this.onPointerDown(event));
-    window.addEventListener("pointermove", this.onPointerMove);
-    window.addEventListener("pointerup", this.onPointerUp);
-    document.body.appendChild(this.element);
+    activeWindow.addEventListener("pointermove", this.onPointerMove);
+    activeWindow.addEventListener("pointerup", this.onPointerUp);
+    activeDocument.body.appendChild(this.element);
   }
 
   update(settings: MikuPluginSettings): void {
@@ -101,8 +102,8 @@ class BannerWidget implements ManagedWidget {
   }
 
   unmount(): void {
-    window.removeEventListener("pointermove", this.onPointerMove);
-    window.removeEventListener("pointerup", this.onPointerUp);
+    activeWindow.removeEventListener("pointermove", this.onPointerMove);
+    activeWindow.removeEventListener("pointerup", this.onPointerUp);
     this.element?.remove();
     this.element = null;
   }
@@ -124,8 +125,8 @@ class BannerWidget implements ManagedWidget {
     if (!this.dragging || !this.element) {
       return;
     }
-    const maxX = Math.max(8, window.innerWidth - this.element.offsetWidth - 8);
-    const maxY = Math.max(8, window.innerHeight - this.element.offsetHeight - 8);
+    const maxX = Math.max(8, activeWindow.innerWidth - this.element.offsetWidth - 8);
+    const maxY = Math.max(8, activeWindow.innerHeight - this.element.offsetHeight - 8);
     const nextX = Math.min(maxX, Math.max(8, event.clientX - this.dragOffsetX));
     const nextY = Math.min(maxY, Math.max(8, event.clientY - this.dragOffsetY));
     applyDragPosition(this.element, nextX, nextY);
@@ -138,8 +139,7 @@ class BannerWidget implements ManagedWidget {
     this.dragging = false;
     this.element.classList.remove("is-dragging");
     const { x, y } = readDragPosition(this.element);
-    const host = this.plugin as unknown as { settings: MikuPluginSettings };
-    host.settings.bannerPosition = { x, y };
+    this.host.settings.bannerPosition = { x, y };
     void this.saveAndRefresh();
   };
 }
@@ -153,18 +153,18 @@ class QuoteWidget implements ManagedWidget {
   private dragging = false;
 
   constructor(
-    private readonly plugin: Plugin,
+    private readonly host: MikuPluginHost,
     private readonly saveAndRefresh: () => Promise<void>
   ) {}
 
   mount(): void {
-    this.element = document.createElement("div");
+    this.element = activeDocument.createElement("div");
     this.element.className = "miku-quote-widget is-hidden";
     this.element.setAttribute("title", "Drag to move quote");
     this.element.addEventListener("pointerdown", (event) => this.onPointerDown(event));
-    window.addEventListener("pointermove", this.onPointerMove);
-    window.addEventListener("pointerup", this.onPointerUp);
-    document.body.appendChild(this.element);
+    activeWindow.addEventListener("pointermove", this.onPointerMove);
+    activeWindow.addEventListener("pointerup", this.onPointerUp);
+    activeDocument.body.appendChild(this.element);
   }
 
   update(settings: MikuPluginSettings): void {
@@ -195,8 +195,8 @@ class QuoteWidget implements ManagedWidget {
   }
 
   unmount(): void {
-    window.removeEventListener("pointermove", this.onPointerMove);
-    window.removeEventListener("pointerup", this.onPointerUp);
+    activeWindow.removeEventListener("pointermove", this.onPointerMove);
+    activeWindow.removeEventListener("pointerup", this.onPointerUp);
     this.stopRotation();
     this.element?.remove();
     this.element = null;
@@ -226,8 +226,8 @@ class QuoteWidget implements ManagedWidget {
     if (!this.dragging || !this.element) {
       return;
     }
-    const maxX = Math.max(8, window.innerWidth - this.element.offsetWidth - 8);
-    const maxY = Math.max(8, window.innerHeight - this.element.offsetHeight - 8);
+    const maxX = Math.max(8, activeWindow.innerWidth - this.element.offsetWidth - 8);
+    const maxY = Math.max(8, activeWindow.innerHeight - this.element.offsetHeight - 8);
     const nextX = Math.min(maxX, Math.max(8, event.clientX - this.dragOffsetX));
     const nextY = Math.min(maxY, Math.max(8, event.clientY - this.dragOffsetY));
     applyDragPosition(this.element, nextX, nextY);
@@ -240,8 +240,7 @@ class QuoteWidget implements ManagedWidget {
     this.dragging = false;
     this.element.classList.remove("is-dragging");
     const { x, y } = readDragPosition(this.element);
-    const host = this.plugin as unknown as { settings: MikuPluginSettings };
-    host.settings.quotePosition = { x, y };
+    this.host.settings.quotePosition = { x, y };
     void this.saveAndRefresh();
   };
 }
@@ -259,13 +258,13 @@ class ProfileCardWidget implements ManagedWidget {
   private suppressNextClick = false;
 
   constructor(
-    private readonly plugin: Plugin,
+    private readonly host: MikuPluginHost,
     private readonly openDashboard: () => Promise<void>,
     private readonly saveAndRefresh: () => Promise<void>
   ) {}
 
   mount(): void {
-    this.element = document.createElement("div");
+    this.element = activeDocument.createElement("div");
     this.element.className = "miku-profile-card is-hidden";
     this.element.setAttribute("role", "button");
     this.element.setAttribute("tabindex", "0");
@@ -275,42 +274,42 @@ class ProfileCardWidget implements ManagedWidget {
     );
     this.element.setAttribute("title", "Open Miku dashboard");
     this.element.addEventListener("pointerdown", (event) => this.onPointerDown(event));
-    window.addEventListener("pointermove", this.onPointerMove);
-    window.addEventListener("pointerup", this.onPointerUp);
+    activeWindow.addEventListener("pointermove", this.onPointerMove);
+    activeWindow.addEventListener("pointerup", this.onPointerUp);
 
-    this.element.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
+    this.element.addEventListener("keydown", (event: KeyboardEvent) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
         this.tryOpenDashboard();
       }
     });
 
-    const headerRow = document.createElement("div");
+    const headerRow = activeDocument.createElement("div");
     headerRow.addClass("miku-profile-card__header");
-    const title = document.createElement("h4");
+    const title = activeDocument.createElement("h4");
     title.setText("Miku lane");
-    this.badgeEl = document.createElement("span");
+    this.badgeEl = activeDocument.createElement("span");
     this.badgeEl.addClass("miku-profile-badge");
     headerRow.append(title, this.badgeEl);
 
-    this.subtitleEl = document.createElement("p");
+    this.subtitleEl = activeDocument.createElement("p");
     this.subtitleEl.addClass("miku-profile-card__subtitle");
 
-    this.chipsEl = document.createElement("div");
+    this.chipsEl = activeDocument.createElement("div");
     this.chipsEl.addClass("miku-profile-card__chips");
 
-    const divider = document.createElement("div");
+    const divider = activeDocument.createElement("div");
     divider.addClass("miku-profile-card__divider");
 
-    this.tipEl = document.createElement("p");
+    this.tipEl = activeDocument.createElement("p");
     this.tipEl.addClass("miku-profile-card__tip");
 
-    const foot = document.createElement("div");
+    const foot = activeDocument.createElement("div");
     foot.addClass("miku-profile-card__foot");
-    const icon = document.createElement("span");
+    const icon = activeDocument.createElement("span");
     icon.addClass("miku-profile-icon");
     setIcon(icon, "sparkles");
-    const hint = document.createElement("span");
+    const hint = activeDocument.createElement("span");
     hint.addClass("miku-profile-card__cta");
     hint.setText("Click / tap for dashboard");
     foot.append(icon, hint);
@@ -331,7 +330,7 @@ class ProfileCardWidget implements ManagedWidget {
       }
       this.tryOpenDashboard();
     });
-    document.body.appendChild(this.element);
+    activeDocument.body.appendChild(this.element);
   }
 
   update(settings: MikuPluginSettings): void {
@@ -371,14 +370,14 @@ class ProfileCardWidget implements ManagedWidget {
     const motion = settings.reducedMotion ? "Calm motion" : "Glow pulse on";
 
     this.chipsEl.replaceChildren();
-    const chipGlow = document.createElement("span");
+    const chipGlow = activeDocument.createElement("span");
     chipGlow.addClass("miku-profile-chip");
     chipGlow.addClass("miku-profile-chip--glow");
     chipGlow.setText(`Glow ${pct}%`);
-    const chipAscii = document.createElement("span");
+    const chipAscii = activeDocument.createElement("span");
     chipAscii.addClass("miku-profile-chip");
     chipAscii.setText(ascii);
-    const chipMotion = document.createElement("span");
+    const chipMotion = activeDocument.createElement("span");
     chipMotion.addClass("miku-profile-chip");
     chipMotion.setText(motion);
     this.chipsEl.append(chipGlow, chipAscii, chipMotion);
@@ -396,13 +395,13 @@ class ProfileCardWidget implements ManagedWidget {
 
   private tryOpenDashboard(): void {
     void this.openDashboard().catch(() => {
-      new Notice("Use Command palette → Open Miku dashboard.");
+      new Notice("Use command palette → open Miku dashboard.");
     });
   }
 
   unmount(): void {
-    window.removeEventListener("pointermove", this.onPointerMove);
-    window.removeEventListener("pointerup", this.onPointerUp);
+    activeWindow.removeEventListener("pointermove", this.onPointerMove);
+    activeWindow.removeEventListener("pointerup", this.onPointerUp);
     this.element?.remove();
     this.element = null;
     this.badgeEl = null;
@@ -429,8 +428,8 @@ class ProfileCardWidget implements ManagedWidget {
     if (!this.dragging || !this.element) {
       return;
     }
-    const maxX = Math.max(8, window.innerWidth - this.element.offsetWidth - 8);
-    const maxY = Math.max(8, window.innerHeight - this.element.offsetHeight - 8);
+    const maxX = Math.max(8, activeWindow.innerWidth - this.element.offsetWidth - 8);
+    const maxY = Math.max(8, activeWindow.innerHeight - this.element.offsetHeight - 8);
     const nextX = Math.min(maxX, Math.max(8, event.clientX - this.dragOffsetX));
     const nextY = Math.min(maxY, Math.max(8, event.clientY - this.dragOffsetY));
     this.movedWhileDragging = true;
@@ -448,8 +447,7 @@ class ProfileCardWidget implements ManagedWidget {
     }
     this.suppressNextClick = true;
     const { x, y } = readDragPosition(this.element);
-    const host = this.plugin as unknown as { settings: MikuPluginSettings };
-    host.settings.profileCardPosition = { x, y };
+    this.host.settings.profileCardPosition = { x, y };
     void this.saveAndRefresh();
   };
 }
@@ -458,15 +456,16 @@ export class WidgetManager {
   private readonly widgets: ManagedWidget[];
 
   constructor(
+    host: MikuPluginHost,
     plugin: Plugin,
     openDashboard: () => Promise<void>,
     saveAndRefresh: () => Promise<void>
   ) {
     this.widgets = [
       new StatusBarWidget(plugin),
-      new BannerWidget(plugin, saveAndRefresh),
-      new QuoteWidget(plugin, saveAndRefresh),
-      new ProfileCardWidget(plugin, openDashboard, saveAndRefresh)
+      new BannerWidget(host, saveAndRefresh),
+      new QuoteWidget(host, saveAndRefresh),
+      new ProfileCardWidget(host, openDashboard, saveAndRefresh)
     ];
   }
 

@@ -1,6 +1,7 @@
 import { Plugin } from "obsidian";
 import { MIKU_PANEL_VIEW, MikuPanelView } from "./miku-panel";
-import { DEFAULT_SETTINGS, MikuPluginSettings } from "./settings";
+import type { MikuPluginHost } from "./miku-plugin-host";
+import { MikuPluginSettings } from "./settings";
 import { WidgetManager } from "./widgets";
 
 export interface ManagedModule {
@@ -13,11 +14,12 @@ class WidgetModule implements ManagedModule {
   private readonly widgetManager: WidgetManager;
 
   constructor(
+    host: MikuPluginHost,
     plugin: Plugin,
     openDashboard: () => Promise<void>,
     saveAndRefresh: () => Promise<void>
   ) {
-    this.widgetManager = new WidgetManager(plugin, openDashboard, saveAndRefresh);
+    this.widgetManager = new WidgetManager(host, plugin, openDashboard, saveAndRefresh);
   }
 
   mount(): void {
@@ -34,41 +36,25 @@ class WidgetModule implements ManagedModule {
 }
 
 class DashboardModule implements ManagedModule {
-  private panelView: MikuPanelView | null = null;
-
-  constructor(private readonly plugin: Plugin) {}
+  constructor(
+    private readonly plugin: Plugin,
+    private readonly host: MikuPluginHost
+  ) {}
 
   mount(): void {
-    this.plugin.registerView(MIKU_PANEL_VIEW, (leaf) => {
-      const host = this.plugin as unknown as {
-        settings: MikuPluginSettings;
-        saveAndRefresh(): Promise<void>;
-      };
-      this.panelView = new MikuPanelView(leaf, host);
-      return this.panelView;
-    });
+    this.plugin.registerView(MIKU_PANEL_VIEW, (leaf) => new MikuPanelView(leaf, this.host));
   }
 
   update(settings: MikuPluginSettings): void {
     const leaves = this.plugin.app.workspace.getLeavesOfType(MIKU_PANEL_VIEW);
-    if (leaves.length > 0) {
-      const view = leaves[0]?.view;
-      if (view instanceof MikuPanelView) {
-        view.setSettings(settings);
-      }
-    } else if (this.panelView) {
-      this.panelView.setSettings(settings);
+    const view = leaves[0]?.view;
+    if (view instanceof MikuPanelView) {
+      view.setSettings(settings);
     }
   }
 
   unmount(): void {
     this.plugin.app.workspace.detachLeavesOfType(MIKU_PANEL_VIEW);
-    this.panelView = null;
-  }
-
-  private getSettings(): MikuPluginSettings {
-    const plugin = this.plugin as unknown as { settings?: MikuPluginSettings };
-    return plugin.settings ?? { ...DEFAULT_SETTINGS };
   }
 }
 
@@ -76,13 +62,14 @@ export class ModuleRegistry {
   private readonly modules: ManagedModule[];
 
   constructor(
+    host: MikuPluginHost,
     plugin: Plugin,
     openDashboard: () => Promise<void>,
     saveAndRefresh: () => Promise<void>
   ) {
     this.modules = [
-      new WidgetModule(plugin, openDashboard, saveAndRefresh),
-      new DashboardModule(plugin)
+      new WidgetModule(host, plugin, openDashboard, saveAndRefresh),
+      new DashboardModule(plugin, host)
     ];
   }
 

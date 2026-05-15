@@ -12,8 +12,10 @@
   }
 }
 
-body.miku-plugin-enabled[data-miku-reduced-motion="true"] * {
-  animation-duration: 0.001ms !important;
-  animation-iteration-count: 1 !important;
-  transition-duration: 0.001ms !important;
+body.miku-plugin-enabled[data-miku-reduced-motion="true"] *,
+body.miku-plugin-enabled[data-miku-reduced-motion="true"] *::before,
+body.miku-plugin-enabled[data-miku-reduced-motion="true"] *::after {
+  animation-duration: 0.001ms;
+  animation-iteration-count: 1;
+  transition-duration: 0.001ms;
 }

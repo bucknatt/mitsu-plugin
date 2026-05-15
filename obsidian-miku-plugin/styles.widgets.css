@@ -374,7 +374,7 @@
   margin: 0 0 0.75rem;
   padding: 0.5rem 0.75rem;
   overflow-x: auto;
-  font-family: var(--font-monospace-theme), ui-monospace, "IBM Plex Mono", monospace;
+  font-family: var(--font-monospace-theme), monospace;
   font-size: 0.72rem;
   line-height: 1.25;
   color: var(--miku-accent, #86cecb);
