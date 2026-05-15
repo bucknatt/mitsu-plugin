@@ -110,7 +110,7 @@ var ASCII_PRESETS = {
     "  *--- ( o_o ) ---*",
     "    /   /|\\   \\",
     "   *   / | \\   *",
-    "      ~ hearts aglow ~"
+    "      ~ hearts at glow ~"
   ].join("\n"),
   /** Ribbon / bow abstract */
   ribbon: [
@@ -139,7 +139,7 @@ var ASCII_PRESETS = {
     "            \uFFE3\uFFE3\uFFE3\uFFE3\uFFE3\uFF3C/\uFF3F\uFF3F\uFF3F\uFF3F/"
   ].join("\n"),
   settings: [
-    "  ~~ miku hybrid ~~",
+    "  ~~ miku plugin ~~",
     "   \\^_^/  tweaks",
     "    \\|/"
   ].join("\n")
