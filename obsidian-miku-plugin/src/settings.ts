@@ -9,8 +9,7 @@ export type MikuAsciiArtPreset =
   | "waves"
   | "sparkle"
   | "ribbon"
-  | "micro"
-  | "portrait";
+  | "micro";
 
 export interface MikuDashboardGoal {
   id: string;

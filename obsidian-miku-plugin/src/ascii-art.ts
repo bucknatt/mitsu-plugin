@@ -55,12 +55,12 @@ export const ASCII_PRESETS = {
 
   /** Stars around a simple face */
   sparkle: [
-    "   *   \\ | /   *",
-    "    \\   \\|/   /",
-    "  *--- ( o_o ) ---*",
-    "    /   /|\\   \\",
-    "   *   / | \\   *",
-    "      ~ hearts at glow ~"
+    "    *   \\ | /   *",
+    "     \\   \\|/   /",
+    "   *--- ( o_o ) ---*",
+    "     /   /|\\   \\",
+    "    *   / | \\   *",
+    "       ~ glow and go ~"
   ].join("\n"),
 
   /** Ribbon / bow abstract */
@@ -75,35 +75,45 @@ export const ASCII_PRESETS = {
 
   /** Fits compact dashboard toggle */
   micro: [
-    " (*^~^*)  ~miku-hybrid~",
-    "  /|\\",
-    " melody in every line"
-  ].join("\n"),
-
-  portrait: [
-    "　　　 　　/＾>》, -―‐‐＜＾}",
-    "　　　 　./:::::::/,≠´:::::;::::::::ヽ.",
-    "　　　　/:::::::〃::::::::::／}::::丿ハ",
-    "　　　 ./:::::::::i{l|:::::／　ﾉ／ }::::::}   .ᐟ.ᐟ",
-    "　　    /:::::::::::瓜イ⸝⸝o　 ´  O, ':::::ﾉ  < woah im getting attention!!111!! )",
-    "　     ./:::::::::::::|ﾉﾍ.{､　 ヮ_.ノﾉイ",
-    "　     |:::::::::::::::| ／,}｀ｽ/￣￣￣￣/",
-    " 　    |::::::::::::::::|(_::::つ/             /　　",
-    "            ￣￣￣￣￣＼/＿＿＿＿/"
+    "  (*^~^*)  hybrid mode",
+    "   /|\\",
+    "  ~ melody in every line ~"
   ].join("\n"),
 
   settings: [
     "  ~~ miku plugin ~~",
-    "   \\^_^/  tweaks",
-    "    \\|/",
+    "   \\^_^/  settings",
+    "    \\|/  tune your vibe"
   ].join("\n")
 } as const;
 
-export function getDashboardAsciiArt(preset: MikuAsciiArtPreset): string | null {
-  if (preset === "off") {
+/** Maps removed presets and unknown saved values to a safe default. */
+export function normalizeAsciiArtPreset(preset: string): MikuAsciiArtPreset {
+  if (preset === "portrait") {
+    return "panel";
+  }
+  const valid: MikuAsciiArtPreset[] = [
+    "off",
+    "minimal",
+    "panel",
+    "notes",
+    "stage",
+    "waves",
+    "sparkle",
+    "ribbon",
+    "micro"
+  ];
+  return valid.includes(preset as MikuAsciiArtPreset)
+    ? (preset as MikuAsciiArtPreset)
+    : "panel";
+}
+
+export function getDashboardAsciiArt(preset: MikuAsciiArtPreset | string): string | null {
+  const normalized = normalizeAsciiArtPreset(preset);
+  if (normalized === "off") {
     return null;
   }
-  switch (preset) {
+  switch (normalized) {
     case "minimal":
       return ASCII_PRESETS.minimal;
     case "panel":
@@ -120,8 +130,6 @@ export function getDashboardAsciiArt(preset: MikuAsciiArtPreset): string | null 
       return ASCII_PRESETS.ribbon;
     case "micro":
       return ASCII_PRESETS.micro;
-    case "portrait":
-      return ASCII_PRESETS.portrait;
     default:
       return ASCII_PRESETS.panel;
   }

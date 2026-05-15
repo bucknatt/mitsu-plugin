@@ -105,12 +105,12 @@ var ASCII_PRESETS = {
   ].join("\n"),
   /** Stars around a simple face */
   sparkle: [
-    "   *   \\ | /   *",
-    "    \\   \\|/   /",
-    "  *--- ( o_o ) ---*",
-    "    /   /|\\   \\",
-    "   *   / | \\   *",
-    "      ~ hearts at glow ~"
+    "    *   \\ | /   *",
+    "     \\   \\|/   /",
+    "   *--- ( o_o ) ---*",
+    "     /   /|\\   \\",
+    "    *   / | \\   *",
+    "       ~ glow and go ~"
   ].join("\n"),
   /** Ribbon / bow abstract */
   ribbon: [
@@ -123,32 +123,39 @@ var ASCII_PRESETS = {
   ].join("\n"),
   /** Fits compact dashboard toggle */
   micro: [
-    " (*^~^*)  ~miku-hybrid~",
-    "  /|\\",
-    " melody in every line"
-  ].join("\n"),
-  portrait: [
-    "\u3000\u3000\u3000 \u3000\u3000/\uFF3E>\u300B, -\u2015\u2010\u2010\uFF1C\uFF3E}",
-    "\u3000\u3000\u3000 \u3000./:::::::/,\u2260\xB4:::::;::::::::\u30FD.",
-    "\u3000\u3000\u3000\u3000/:::::::\u3003::::::::::\uFF0F}::::\u4E3F\u30CF",
-    "\u3000\u3000\u3000 ./:::::::::i{l|:::::\uFF0F\u3000\uFF89\uFF0F }::::::}   .\u141F.\u141F",
-    "\u3000\u3000    /:::::::::::\u74DC\u30A4\u2E1D\u2E1Do\u3000 \xB4  O, ':::::\uFF89  < woah im getting attention!!111!! )",
-    "\u3000     ./:::::::::::::|\uFF89\uFF8D.{\uFF64\u3000 \u30EE_.\u30CE\uFF89\u30A4",
-    "\u3000     |:::::::::::::::| \uFF0F,}\uFF40\uFF7D/\uFFE3\uFFE3\uFFE3\uFFE3/",
-    " \u3000    |::::::::::::::::|(_::::\u3064/       \uF8FF      /\u3000\u3000",
-    "            \uFFE3\uFFE3\uFFE3\uFFE3\uFFE3\uFF3C/\uFF3F\uFF3F\uFF3F\uFF3F/"
+    "  (*^~^*)  hybrid mode",
+    "   /|\\",
+    "  ~ melody in every line ~"
   ].join("\n"),
   settings: [
     "  ~~ miku plugin ~~",
-    "   \\^_^/  tweaks",
-    "    \\|/"
+    "   \\^_^/  settings",
+    "    \\|/  tune your vibe"
   ].join("\n")
 };
+function normalizeAsciiArtPreset(preset) {
+  if (preset === "portrait") {
+    return "panel";
+  }
+  const valid = [
+    "off",
+    "minimal",
+    "panel",
+    "notes",
+    "stage",
+    "waves",
+    "sparkle",
+    "ribbon",
+    "micro"
+  ];
+  return valid.includes(preset) ? preset : "panel";
+}
 function getDashboardAsciiArt(preset) {
-  if (preset === "off") {
+  const normalized = normalizeAsciiArtPreset(preset);
+  if (normalized === "off") {
     return null;
   }
-  switch (preset) {
+  switch (normalized) {
     case "minimal":
       return ASCII_PRESETS.minimal;
     case "panel":
@@ -165,8 +172,6 @@ function getDashboardAsciiArt(preset) {
       return ASCII_PRESETS.ribbon;
     case "micro":
       return ASCII_PRESETS.micro;
-    case "portrait":
-      return ASCII_PRESETS.portrait;
     default:
       return ASCII_PRESETS.panel;
   }
@@ -186,8 +191,7 @@ var ASCII_PRESET_OPTIONS = [
   { id: "stage", label: "Stage (spotlight)" },
   { id: "waves", label: "Waves" },
   { id: "sparkle", label: "Sparkle frame" },
-  { id: "ribbon", label: "Ribbon bows" },
-  { id: "portrait", label: "Portrait (Wonderland)" }
+  { id: "ribbon", label: "Ribbon bows" }
 ];
 var MikuSettingTab = class extends import_obsidian.PluginSettingTab {
   constructor(app, plugin) {
@@ -286,7 +290,7 @@ var MikuSettingTab = class extends import_obsidian.PluginSettingTab {
     });
     new import_obsidian.Setting(containerEl).setName("ASCII art preset (dashboard)").setDesc("Shown at the top of the Miku dashboard view.").addDropdown((dropdown) => {
       ASCII_PRESET_OPTIONS.forEach(({ id, label }) => dropdown.addOption(id, label));
-      dropdown.setValue(this.plugin.settings.asciiArtPreset);
+      dropdown.setValue(normalizeAsciiArtPreset(this.plugin.settings.asciiArtPreset));
       dropdown.onChange(async (value) => {
         this.plugin.settings.asciiArtPreset = value;
         await this.plugin.saveAndRefresh();
@@ -334,10 +338,11 @@ var MikuPanelView = class extends import_obsidian2.ItemView {
     container.empty();
     container.addClass("miku-dashboard");
     container.toggleClass("is-compact", this.settings.compactDashboard);
-    const ascii = getDashboardAsciiArt(this.settings.asciiArtPreset);
+    const asciiPreset = normalizeAsciiArtPreset(this.settings.asciiArtPreset);
+    const ascii = getDashboardAsciiArt(asciiPreset);
     if (ascii) {
       const pre = container.createEl("pre", {
-        cls: `miku-ascii miku-ascii--${this.settings.asciiArtPreset}`
+        cls: `miku-ascii miku-ascii--${asciiPreset}`
       });
       pre.textContent = ascii;
     }
@@ -1045,6 +1050,7 @@ var MikuPlugin = class extends import_obsidian4.Plugin {
   async loadPluginSettings() {
     const loaded = await this.loadData();
     this.settings = { ...DEFAULT_SETTINGS, ...loaded ?? {} };
+    this.settings.asciiArtPreset = normalizeAsciiArtPreset(this.settings.asciiArtPreset);
   }
   async cycleTheme() {
     const modes = ["MinimalMiku", "Concert", "NightNeon", "SnowMiku"];

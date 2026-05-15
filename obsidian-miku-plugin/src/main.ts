@@ -3,6 +3,7 @@ import { DEFAULT_SETTINGS, MikuPluginSettings } from "./settings";
 import { MikuSettingTab } from "./settings-tab";
 import { MIKU_PANEL_VIEW, MikuPanelView } from "./miku-panel";
 import { ModuleRegistry } from "./modules";
+import { normalizeAsciiArtPreset } from "./ascii-art";
 import { ThemeManager } from "./theme-manager";
 
 export default class MikuPlugin extends Plugin {
@@ -65,6 +66,7 @@ export default class MikuPlugin extends Plugin {
   private async loadPluginSettings(): Promise<void> {
     const loaded = (await this.loadData()) as Partial<MikuPluginSettings> | null;
     this.settings = { ...DEFAULT_SETTINGS, ...(loaded ?? {}) };
+    this.settings.asciiArtPreset = normalizeAsciiArtPreset(this.settings.asciiArtPreset);
   }
 
   private async cycleTheme(): Promise<void> {

@@ -1,5 +1,5 @@
 import { ItemView, Notice, WorkspaceLeaf } from "obsidian";
-import { getDashboardAsciiArt } from "./ascii-art";
+import { getDashboardAsciiArt, normalizeAsciiArtPreset } from "./ascii-art";
 import type { MikuDashboardGoal, MikuPluginSettings } from "./settings";
 
 export const MIKU_PANEL_VIEW = "miku-dashboard-view";
@@ -46,10 +46,11 @@ export class MikuPanelView extends ItemView {
     container.addClass("miku-dashboard");
     container.toggleClass("is-compact", this.settings.compactDashboard);
 
-    const ascii = getDashboardAsciiArt(this.settings.asciiArtPreset);
+    const asciiPreset = normalizeAsciiArtPreset(this.settings.asciiArtPreset);
+    const ascii = getDashboardAsciiArt(asciiPreset);
     if (ascii) {
       const pre = container.createEl("pre", {
-        cls: `miku-ascii miku-ascii--${this.settings.asciiArtPreset}`
+        cls: `miku-ascii miku-ascii--${asciiPreset}`
       });
       pre.textContent = ascii;
     }

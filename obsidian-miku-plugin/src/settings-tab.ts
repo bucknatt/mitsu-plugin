@@ -1,5 +1,5 @@
 import { App, PluginSettingTab, Setting } from "obsidian";
-import { getSettingsAsciiArt } from "./ascii-art";
+import { getSettingsAsciiArt, normalizeAsciiArtPreset } from "./ascii-art";
 import MikuPlugin from "./main";
 import { MikuAsciiArtPreset, MikuThemeMode } from "./settings";
 
@@ -14,8 +14,7 @@ const ASCII_PRESET_OPTIONS: { id: MikuAsciiArtPreset; label: string }[] = [
   { id: "stage", label: "Stage (spotlight)" },
   { id: "waves", label: "Waves" },
   { id: "sparkle", label: "Sparkle frame" },
-  { id: "ribbon", label: "Ribbon bows" },
-  { id: "portrait", label: "Portrait (Wonderland)" }
+  { id: "ribbon", label: "Ribbon bows" }
 ];
 
 export class MikuSettingTab extends PluginSettingTab {
@@ -155,7 +154,7 @@ export class MikuSettingTab extends PluginSettingTab {
       .setDesc("Shown at the top of the Miku dashboard view.")
       .addDropdown((dropdown) => {
         ASCII_PRESET_OPTIONS.forEach(({ id, label }) => dropdown.addOption(id, label));
-        dropdown.setValue(this.plugin.settings.asciiArtPreset);
+        dropdown.setValue(normalizeAsciiArtPreset(this.plugin.settings.asciiArtPreset));
         dropdown.onChange(async (value) => {
           this.plugin.settings.asciiArtPreset = value as MikuAsciiArtPreset;
           await this.plugin.saveAndRefresh();
