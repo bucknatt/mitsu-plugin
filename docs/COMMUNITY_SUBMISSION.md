@@ -6,6 +6,7 @@ Submit **Miku Plugin Hybrid** at [community.obsidian.md](https://community.obsid
 
 - [ ] GitHub repo is public (`bucknatt/mitsu-plugin` or your publish repo)
 - [ ] Root `manifest.json`, `LICENSE`, and marketplace `README.md` on default branch
+- [ ] Push `main` and tag `1.0.0` — see [RELEASE_1.0.0.md](RELEASE_1.0.0.md)
 - [ ] GitHub Release **`1.0.0`** published with assets: `main.js`, `manifest.json`, `styles.css`
 - [ ] Release tag **equals** `manifest.json` `version` (no `v` prefix)
 - [ ] Obsidian account + GitHub account linked on community.obsidian.md
