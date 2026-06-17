@@ -369,6 +369,22 @@
   }
 }
 
+/* Honor plugin-level reduced motion toggle for widget animations/transitions. */
+body.miku-plugin-enabled[data-miku-reduced-motion="true"] .miku-eq-bar {
+  animation: none;
+}
+
+body.miku-plugin-enabled[data-miku-reduced-motion="true"] .miku-profile-card,
+body.miku-plugin-enabled[data-miku-reduced-motion="true"] .miku-top-banner,
+body.miku-plugin-enabled[data-miku-reduced-motion="true"] .miku-quote-widget {
+  transition: none;
+}
+
+body.miku-plugin-enabled[data-miku-reduced-motion="true"] .miku-profile-card:hover,
+body.miku-plugin-enabled[data-miku-reduced-motion="true"] .miku-profile-card:active {
+  transform: none;
+}
+
 /* Original ASCII motifs — bundled theme supplies --miku-* when plugin is enabled */
 .miku-ascii {
   margin: 0 0 0.75rem;

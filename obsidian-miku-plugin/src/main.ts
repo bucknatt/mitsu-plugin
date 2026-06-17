@@ -73,6 +73,7 @@ export default class MikuPlugin extends Plugin implements MikuPluginHost {
     const loaded = (await this.loadData()) as Partial<MikuPluginSettings> | null;
     this.settings = { ...DEFAULT_SETTINGS, ...(loaded ?? {}) };
     this.settings.asciiArtPreset = normalizeAsciiArtPreset(this.settings.asciiArtPreset);
+    this.settings.quoteIntervalSeconds = Math.max(5, this.settings.quoteIntervalSeconds);
   }
 
   private async cycleTheme(): Promise<void> {

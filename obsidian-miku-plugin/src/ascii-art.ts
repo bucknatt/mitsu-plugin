@@ -4,52 +4,52 @@ import type { MikuAsciiArtPreset } from "./settings";
 
 export const ASCII_PRESETS = {
   minimal: [
-    "    *       ",
-    "   / \\      ",
+    "     *       ",
+    "   /   \\      ",
     "  ( @ @ )    ",
     "   \\ ~ /    ",
     "  ~~| |~~   ",
-    " twin tails vibe "
+    " welcome to wonderland "
   ].join("\n"),
 
   panel: [
-    "      .^.    * synth garden *",
+    "   twin tail   .^.    * miku miku *",
     "     /   \\",
     "  ~ /~~~~~\\ ~",
-    "   ( o   o )   teal + pink sparks",
+    "   ( o   o )   cyan + pink sparks",
     "    \\~~~~~/    ",
     "  ~/       \\~  ",
     " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
-    "   keep your tempo; let ideas sing!"
+    " track your goals - let ideas sing!"
   ].join("\n"),
 
   /** Eighth-notes and staff-ish lines */
   notes: [
-    "   |'|   |'|   |'|",
-    "   | |___| |___| |",
+    "   |'|   |'|   |' |",
+    "   | |___| |___|  |",
     "    \\  *   *   * /",
-    "     \\___~___~/   ~your melody~",
+    "     \\____~____~/   ~your melody~",
     "        |   |",
     "        ~~~ ~~~"
   ].join("\n"),
 
   /** Spotlight / live feel */
   stage: [
-    "         .---.---.",
-    "        /  o     o  \\",
+    "        ..--- .---..",
+    "       /  o     o   \\",
     "       |      ^      |   your song",
     "       |____ / \\ ____|",
-    "         \\  lights  /",
-    "          \\________/",
-    "           ~ sing on ~"
+    "        \\  lights   /",
+    "         \\_________/",
+    "          ~ sing on ~"
   ].join("\n"),
 
   /** Waves + open sea motif */
   waves: [
-    "  ~^~^~^~^~^~^~^~^~^~^~^~",
+    " ~^~^~^~^~^~^~^~^~^~^~^~",
     " ^  /\\  /\\  /\\  /\\  /\\  ^",
     "^ ~(__)(__)(__)(__)(__)~ ^",
-    " ^    ~  endless melody  ~  ^",
+    " ^  ~  endless melody  ~ ^",
     "  ~^~^~^~^~^~^~^~^~^~^~^~"
   ].join("\n"),
 
@@ -60,23 +60,23 @@ export const ASCII_PRESETS = {
     "   *--- ( o_o ) ---*",
     "     /   /|\\   \\",
     "    *   / | \\   *",
-    "       ~ glow and go ~"
+    "    ~ glow and go ~"
   ].join("\n"),
 
   /** Ribbon / bow abstract */
   ribbon: [
     "    .--.       .--.",
     "   /    \\     /    \\",
-    "  (   ^@^   ---   ^@^   )",
-    "   \\  / \\  / \\  /  /",
+    "  (   ^@^ --- ^@^   )",
+    "   \\  / \\   / \\ /  /",
     "    ~~/   ~^~   \\~~",
-    "      ~ tie notes ~"
+    "     ~ tie is my bow ~"
   ].join("\n"),
 
   /** Fits compact dashboard toggle */
   micro: [
-    "  (*^~^*)  hybrid mode",
-    "   /|\\",
+    "  (*^~^*)  sparkling mode",
+    "    /|\\",
     "  ~ melody in every line ~"
   ].join("\n"),
 

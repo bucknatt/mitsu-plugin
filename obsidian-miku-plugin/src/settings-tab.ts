@@ -99,7 +99,7 @@ export class MikuSettingTab extends PluginSettingTab {
     new Setting(containerEl)
       .setName("Quote interval (seconds)")
       .addSlider((slider: SliderComponent) => {
-        slider.setLimits(10, 120, 5);
+        slider.setLimits(5, 120, 5);
         slider.setValue(this.plugin.settings.quoteIntervalSeconds);
         slider.setDynamicTooltip();
         slider.onChange((value: number) => {
