@@ -1,7 +1,7 @@
 {
   "id": "miku-plugin-hybrid",
   "name": "Miku Hybrid",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "minAppVersion": "1.7.2",
   "description": "Switch Miku-inspired theme modes and optional dashboard widgets with built-in hybrid styling.",
   "author": "Nattaya Buck",
